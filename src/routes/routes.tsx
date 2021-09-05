@@ -1,17 +1,24 @@
+import { MainLayout } from '@/components/Layout';
+import { path } from '@/constants';
 import { lazyImport } from '@/utils/lazyImport';
 
 const { Auth } = lazyImport(() => import('@/features/auth'), 'Auth');
 const { Home } = lazyImport(() => import('@/features/home'), 'Home');
 
-let routes: any[] = [
+const routes: any[] = [
   {
-    path: '/auth',
-    component: Auth,
-  },
-  {
-    path: '/',
-    component: Home,
-    exact: true,
+    component: MainLayout,
+    routes: [
+      {
+        path: path.home,
+        component: Home,
+        exact: true,
+      },
+      {
+        path: path.auth,
+        component: Auth,
+      },
+    ],
   },
 ];
 

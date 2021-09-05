@@ -3,5 +3,5 @@ import React from 'react';
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
-  return <div>Page home</div>;
+  return <main>Page home</main>;
 };
