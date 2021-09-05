@@ -1,5 +1,5 @@
 export const path = {
   home: '/',
-  auth: 'auth',
+  auth: '/auth',
   notFound: '*',
 };
