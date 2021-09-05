@@ -1,6 +1,6 @@
 import { axios } from '@/lib/axios';
 
-import { UserResponse } from '../types';
+import { AuthResponse } from '../types';
 
 interface UserAddress {
   city: string;
@@ -19,6 +19,6 @@ export type RegisterCredentialsDTO = {
 
 export const registerWithEmailAndPassword = (
   data: RegisterCredentialsDTO
-): Promise<UserResponse> => {
+): Promise<AuthResponse> => {
   return axios.post('/auth/register', data);
 };

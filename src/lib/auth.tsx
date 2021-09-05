@@ -2,6 +2,7 @@ import { initReactQueryAuth } from 'react-query-auth';
 
 import {
   loginWithEmailAndPassword,
+  getUser,
   registerWithEmailAndPassword,
   UserResponse,
   LoginCredentialsDTO,
@@ -11,29 +12,28 @@ import {
 import storage from '@/utils/storage';
 
 async function handleUserResponse(data: UserResponse) {
-  const { jwt, user } = data;
-  storage.setToken(jwt);
+  const { token, user } = data;
+  storage.setToken(token);
   return user;
 }
 
 async function loadUser() {
   if (storage.getToken()) {
-    // const data = await getUser();
-    const data = {} as AuthUser;
+    const data = await getUser();
     return data;
   }
   return null;
 }
 
 async function loginFn(data: LoginCredentialsDTO) {
-  const response = await loginWithEmailAndPassword(data);
-  const user = await handleUserResponse(response);
+  const { values } = await loginWithEmailAndPassword(data);
+  const user = await handleUserResponse(values);
   return user;
 }
 
 async function registerFn(data: RegisterCredentialsDTO) {
-  const response = await registerWithEmailAndPassword(data);
-  const user = await handleUserResponse(response);
+  const { values } = await registerWithEmailAndPassword(data);
+  const user = await handleUserResponse(values);
   return user;
 }
 
