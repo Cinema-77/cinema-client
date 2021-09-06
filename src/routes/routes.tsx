@@ -4,6 +4,7 @@ import { lazyImport } from '@/utils/lazyImport';
 
 const { Auth } = lazyImport(() => import('@/features/auth'), 'Auth');
 const { Home } = lazyImport(() => import('@/features/home'), 'Home');
+const { NotFound } = lazyImport(() => import('@/components/Elements'), 'NotFound');
 
 const routes: any[] = [
   {
@@ -17,6 +18,10 @@ const routes: any[] = [
       {
         path: path.auth,
         component: Auth,
+      },
+      {
+        path: path.notFound,
+        component: NotFound,
       },
     ],
   },
