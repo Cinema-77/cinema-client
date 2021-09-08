@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // import { Button, Spinner } from '@/components/Elements';
 import { AuthProvider } from '@/lib/auth';
 import { queryClient } from '@/lib/react-query';
+import { HelmetProvider } from 'react-helmet-async';
 
 const ErrorFallback = () => {
   return (
@@ -28,22 +29,24 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <React.Suspense
-      fallback={
-        <div className="h-screen w-screen flex items-center justify-center">
-          {/* <Spinner size="xl" /> */}
-          <h2 className="text-lg font-semibold">Loading ....</h2>
-        </div>
-      }
-    >
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <QueryClientProvider client={queryClient}>
-          {process.env.NODE_ENV !== 'test' && <ReactQueryDevtools />}
-          <AuthProvider>
-            <Router>{children}</Router>
-          </AuthProvider>
-        </QueryClientProvider>
-      </ErrorBoundary>
-    </React.Suspense>
+    <HelmetProvider>
+      <React.Suspense
+        fallback={
+          <div className="h-screen w-screen flex items-center justify-center">
+            {/* <Spinner size="xl" /> */}
+            <h2 className="text-lg font-semibold">Loading ....</h2>
+          </div>
+        }
+      >
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <QueryClientProvider client={queryClient}>
+            {process.env.NODE_ENV !== 'test' && <ReactQueryDevtools />}
+            <AuthProvider>
+              <Router>{children}</Router>
+            </AuthProvider>
+          </QueryClientProvider>
+        </ErrorBoundary>
+      </React.Suspense>
+    </HelmetProvider>
   );
 };

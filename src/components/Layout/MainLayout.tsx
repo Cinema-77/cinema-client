@@ -1,14 +1,18 @@
-import { RouteWithSubRoutes } from '@/routes/config/routerConfig';
 import React from 'react';
+import { RouteWithSubRoutes } from '@/routes/config/routerConfig';
 import { Switch } from 'react-router';
 import { Footer, Header } from '../Elements';
 
-export const MainLayout: React.ReactNode = ({ routes }: any) => {
+type ContentLayoutProps = {
+  routes: any;
+};
+
+export const MainLayout = ({ routes }: ContentLayoutProps) => {
   return (
     <>
       <Header />
       <Switch>
-        {routes.map((route: any, i: any) => (
+        {routes.map((route: any, i: number) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
       </Switch>
