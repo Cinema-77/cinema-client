@@ -212,6 +212,6 @@ export const HeaderBottom = styled.section`
   line-height: 1.95rem;
   text-align: center;
   text-transform: uppercase;
-  margin-top: 2rem;
   padding: 1.4rem 0;
+  margin: 1.6rem 0;
 `;

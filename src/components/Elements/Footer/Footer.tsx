@@ -1,7 +1,9 @@
 import React from 'react';
 import * as S from './Footer.style';
 
-export const Footer = () => {
+interface FooterProps {}
+
+export const Footer: React.FC<FooterProps> = () => {
   return (
     <S.Footer>
       <S.FooterForm>

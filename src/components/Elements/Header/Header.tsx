@@ -1,7 +1,9 @@
 import React from 'react';
 import * as S from './Header.style';
 
-export const Header = () => {
+interface HeaderProps {}
+
+export const Header: React.FC<HeaderProps> = () => {
   return (
     <S.Header>
       <S.HeaderBG>
