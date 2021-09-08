@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
+import { Head } from '@/components/Head';
 
 export function RouteWithSubRoutes(route: any) {
   if (route.auth) {
@@ -8,7 +9,10 @@ export function RouteWithSubRoutes(route: any) {
         path={route.path}
         render={(props: any) => (
           // pass the sub-routes down to keep nesting
-          <route.component {...props} routes={route.routes} />
+          <>
+            <Head title={route.title} />
+            <route.component {...props} routes={route.routes} />
+          </>
         )}
       />
     );
@@ -17,10 +21,13 @@ export function RouteWithSubRoutes(route: any) {
   return (
     <Route
       path={route.path}
-      render={(props) => {
+      render={(props) => (
         // pass the sub-routes down to keep nesting
-        return <route.component {...props} routes={route.routes} />;
-      }}
+        <>
+          <Head title={route.title} />
+          <route.component {...props} routes={route.routes} />
+        </>
+      )}
     />
   );
 }

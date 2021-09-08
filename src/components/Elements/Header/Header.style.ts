@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BG from '@/assets/img/pattern-1.svg';
+import BG from '@/assets/pattern-1.svg';
 
 export const Header = styled.header``;
 export const HeaderBG = styled.section`

@@ -13,15 +13,18 @@ const routes: any[] = [
       {
         path: path.home,
         component: Home,
+        title: 'Movieer: Hệ Thống Rạp Chiếu Phim Hiện Đại',
         exact: true,
       },
       {
         path: path.auth,
         component: Auth,
+        title: 'Đăng nhập',
       },
       {
         path: path.notFound,
         component: NotFound,
+        title: '404 Not Found',
       },
     ],
   },

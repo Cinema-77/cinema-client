@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './Slider.style';
-import Banner1 from '@/assets/img/banner1.jpg';
-import Banner2 from '@/assets/img/banner2.jpg';
-import Banner3 from '@/assets/img/banner3.jpg';
+import Banner1 from '@/assets/banner1.jpg';
+import Banner2 from '@/assets/banner2.jpg';
+import Banner3 from '@/assets/banner3.jpg';
 
 interface SliderProps {}
 

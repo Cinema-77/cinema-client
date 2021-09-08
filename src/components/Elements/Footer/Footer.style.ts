@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BG from '@/assets/img/pattern-2.svg';
+import BG from '@/assets/pattern-2.svg';
 
 export const Footer = styled.footer`
   background-image: url(${BG});
