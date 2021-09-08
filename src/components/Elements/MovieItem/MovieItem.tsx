@@ -8,7 +8,7 @@ interface MovieItemProps {
 export const MovieItem: React.FC<MovieItemProps> = ({ image }) => {
   return (
     <S.MovieList>
-      {image.map((img: any, index: any) => (
+      {image.slice(0, 6).map((img: any, index: any) => (
         <S.MovieItem key={index}>
           <S.MovieItemIMG to="">
             <img src={img.film} alt="" />
