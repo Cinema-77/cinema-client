@@ -18,14 +18,7 @@ export const MovieLink = styled.button`
   position: relative;
   padding: 0.8rem 1.6rem;
   font-weight: 700;
-
-  &:focus {
-    color: #ff6f61;
-
-    &::after {
-      width: 100%;
-    }
-  }
+  color: ${({ comingsoon }: any) => !comingsoon && '#ff6f61'};
 
   &::after {
     content: '';
@@ -33,12 +26,11 @@ export const MovieLink = styled.button`
     left: 0;
     top: 100%;
     height: 1px;
-    width: 0%;
+    width: ${({ comingsoon }: any) => !comingsoon && '100%'};
     background-color: #ff6f61;
-    transition: linear 0.2s;
   }
 
   &:hover {
     color: #ff6f61;
   }
-`;
+` as any;

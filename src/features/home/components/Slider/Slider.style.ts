@@ -24,10 +24,9 @@ export const SliderBtnPrev = styled.button`
     );
   }
 
-  svg {
+  img {
     width: 3rem;
     height: 3.6rem;
-    fill: #fff;
     transform: rotate(180deg);
   }
 `;
@@ -52,9 +51,8 @@ export const SliderBtnNext = styled.button`
     );
   }
 
-  svg {
+  img {
     width: 3rem;
     height: 3.6rem;
-    fill: #fff;
   }
 `;

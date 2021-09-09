@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BG from '@/assets/pattern-1.svg';
+import BG from '@/assets/icon/pattern-1.svg';
 
 export const Header = styled.header``;
 export const HeaderBG = styled.section`
@@ -18,7 +18,8 @@ export const HeaderInfo = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 0 2rem;
-  svg {
+
+  img {
     width: 14px;
     height: 14px;
   }
@@ -32,7 +33,7 @@ export const HeaderInfoSelect = styled.div`
   font-size: 1.4rem;
   padding: 8px 16px;
 
-  svg {
+  img {
     width: 0.8rem;
     height: 0.8rem;
     transform: rotate(-90deg);
@@ -97,11 +98,10 @@ export const HeaderAccount = styled.section`
   align-items: center;
   gap: 0 2rem;
 
-  svg {
+  img {
     width: 1.5rem;
     height: 1.5rem;
     margin-bottom: 2px;
-    fill: #000;
   }
 `;
 export const HeaderAccountLink = styled(Link)`
@@ -119,16 +119,12 @@ export const HeaderSocial = styled.section`
 `;
 
 export const HeaderSocialLink = styled(Link)`
-  svg {
-    cursor: pointer;
+  img {
     width: 15px;
     height: 15px;
-    fill: #909090;
-    font-size: 1.4rem;
-    line-height: 1.4rem;
 
     &:hover {
-      fill: #303030;
+      opacity: 0.6;
     }
   }
 `;

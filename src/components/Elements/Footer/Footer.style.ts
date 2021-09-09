@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BG from '@/assets/pattern-2.svg';
+import BG from '@/assets/icon/pattern-2.svg';
 
 export const Footer = styled.footer`
   background-image: url(${BG});
@@ -91,13 +91,12 @@ export const FooterContactLink = styled(Link)`
   font-weight: 500;
   color: #bababa;
 
-  svg {
+  img {
     width: 1.6rem;
     height: 1.6rem;
-    fill: #a6a6a6;
 
     &:hover {
-      fill: #909090;
+      opacity: 0.5;
     }
   }
 
@@ -134,7 +133,7 @@ export const FooterBotPay = styled.div`
   align-items: center;
   gap: 0 0.5rem;
 
-  svg {
+  img {
     width: 4.5rem;
     height: 4.5rem;
   }
