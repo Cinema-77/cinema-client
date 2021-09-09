@@ -2,7 +2,7 @@ import { axios } from '@/lib/axios';
 
 import { AuthResponse } from '../types';
 
-interface UserAddress {
+export interface UserAddress {
   city: string;
   district: string;
   ward: string;
@@ -15,6 +15,8 @@ export type RegisterCredentialsDTO = {
   fullName: string;
   address: UserAddress;
   dateOfBirth: string;
+  password: string;
+  confirmPassword: string;
 };
 
 export const registerWithEmailAndPassword = (

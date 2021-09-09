@@ -25,7 +25,7 @@ export const SelectField = (props: SelectFieldProps) => {
         placeholder={placeholder}
         name="location"
         className={clsx(
-          'mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md',
+          'appearance-none inline-block w-full py-[13px] pl-[20px] pr-[56px] text-base border border-[#e5e5e5] focus:outline-none focus:border-[#1f1f1f] sm:text-base ',
           className
         )}
         defaultValue={defaultValue}

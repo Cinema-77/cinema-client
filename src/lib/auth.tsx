@@ -10,6 +10,7 @@ import {
   AuthUser,
 } from '@/features/auth';
 import storage from '@/utils/storage';
+import { Spinner } from '@/components/Elements';
 
 async function handleUserResponse(data: UserResponse) {
   const { token, user } = data;
@@ -50,8 +51,7 @@ const authConfig = {
   LoaderComponent() {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
-        {/* <Spinner size="xl" /> */}
-        <h2 className="text-lg font-semibold">Loading...</h2>
+        <Spinner size="xl" />
       </div>
     );
   },
