@@ -8,6 +8,7 @@ import IconINSTA from '@/assets/icon/iconinsta.svg';
 import IconMED from '@/assets/icon/iconmedium.svg';
 import IconSEARCH from '@/assets/icon/iconsearch.svg';
 import IconPERSON from '@/assets/icon/iconperson.svg';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {}
 
@@ -56,7 +57,7 @@ export const Header: React.FC<HeaderProps> = () => {
       </S.HeaderBG>
       <div className="container">
         <S.HeaderCenter>
-          <S.HeaderLogo to="">Movieer</S.HeaderLogo>
+          <S.HeaderLogo to="">Movieer.</S.HeaderLogo>
           <S.HeaderList>
             <S.HeaderItem>
               Phim
@@ -101,10 +102,10 @@ export const Header: React.FC<HeaderProps> = () => {
             <S.HeaderAccountLink to="">
               <img src={IconSEARCH} alt="" />
             </S.HeaderAccountLink>
-            <S.HeaderAccountLink to="">
-              <img src={IconPERSON} alt="" />
-            </S.HeaderAccountLink>
-            <S.HeaderAccountLink to="">Đăng Nhập</S.HeaderAccountLink>
+            <Link className="flex p-5 items-center" to="/auth">
+              <img src={IconPERSON} alt="" className="inline-block mr-5" />
+              <span>Đăng Nhập</span>
+            </Link>
           </S.HeaderAccount>
         </S.HeaderCenter>
       </div>

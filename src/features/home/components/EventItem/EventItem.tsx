@@ -13,7 +13,7 @@ export const EventItem = () => {
         <S.EventIem key={index}>
           <img src={img} alt="" />
           <S.EventItemOverLay to="">
-            <S.EventItemLink to="">Chi Tiết</S.EventItemLink>
+            <S.EventItemLink>Chi Tiết</S.EventItemLink>
           </S.EventItemOverLay>
         </S.EventIem>
       ))}
