@@ -17,7 +17,7 @@ export const InputField = (props: InputFieldProps) => {
         type={type}
         placeholder={label}
         className={clsx(
-          'appearance-none block w-full p-5 text-xl border border-[#e5e5e5] leading-normal placeholder-gray-500 focus:outline-none focus:border-[#1f1f1f] sm:text-2xl bg-white',
+          'appearance-none block w-full p-5 text-xl font-medium border border-[#e5e5e5] leading-normal placeholder-gray-500 focus:outline-none focus:border-[#1f1f1f] sm:text-2xl bg-white',
           className
         )}
         {...registration}
