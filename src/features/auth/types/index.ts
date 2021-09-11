@@ -22,3 +22,19 @@ export interface AuthResponse {
   message: string;
   values: UserResponse;
 }
+
+export interface Cities {
+  name: string;
+  code: number;
+  division_type: string;
+  codename: string;
+  phone_code: number;
+}
+
+export interface District extends Cities {
+  province_code: number;
+}
+
+export interface Ward extends Cities {
+  district_code: number;
+}

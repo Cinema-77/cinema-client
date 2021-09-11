@@ -13,6 +13,24 @@ module.exports = {
         'my-gray': '#f5f5f5',
         title: '#111111',
       },
+      backgroundImage: (theme) => ({
+        'icon-down': 'url(/src/assets/icon/icondropdown.svg)',
+      }),
+    },
+    backgroundSize: {
+      auto: 'auto',
+      cover: 'cover',
+      contain: 'contain',
+      1: '1.5rem',
+      2: '2rem',
+    },
+    backgroundPosition: {
+      bottom: 'bottom',
+      center: 'center',
+      left: 'left',
+      right: 'right',
+      top: 'top',
+      'center-2': 'right 2.5rem center',
     },
     flex: {
       0: '0 0 auto',

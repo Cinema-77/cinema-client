@@ -12,7 +12,9 @@ body {
   font-family: 'Jost', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  color: #111;
 }
 
 code {
