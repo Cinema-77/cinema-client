@@ -25,7 +25,7 @@ export const FieldWrapper = (props: FieldWrapperProps) => {
       <label className={clsx('text-2xl font-medium', variants[variant], className)}>{label}</label>
       {children}
       {error?.message && (
-        <div role="alert" aria-label={error.message} className="text-sm font-semibold text-red-500">
+        <div role="alert" aria-label={error.message} className="text-xl font-semibold text-red-500">
           {error.message}
         </div>
       )}

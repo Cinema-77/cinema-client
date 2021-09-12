@@ -8,6 +8,7 @@ import {
   LoginCredentialsDTO,
   RegisterCredentialsDTO,
   AuthUser,
+  AuthErrors,
 } from '@/features/auth';
 import storage from '@/utils/storage';
 import { Spinner } from '@/components/Elements';
@@ -20,20 +21,28 @@ async function handleUserResponse(data: UserResponse) {
 
 async function loadUser() {
   if (storage.getToken()) {
-    const data = await getUser();
-    return data;
+    const { user } = await getUser();
+    return user as AuthUser;
   }
   return null;
 }
 
 async function loginFn(data: LoginCredentialsDTO) {
-  const { values } = await loginWithEmailAndPassword(data);
+  const { values, errors, success } = await loginWithEmailAndPassword(data);
+
+  if (errors) {
+    return { ...errors, success };
+  }
+
   const user = await handleUserResponse(values);
   return user;
 }
 
 async function registerFn(data: RegisterCredentialsDTO) {
-  const { values } = await registerWithEmailAndPassword(data);
+  const { values, errors, success } = await registerWithEmailAndPassword(data);
+  if (errors) {
+    return { ...errors, success };
+  }
   const user = await handleUserResponse(values);
   return user;
 }
@@ -58,7 +67,7 @@ const authConfig = {
 };
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<
-  AuthUser | null,
+  AuthUser | null | AuthErrors,
   unknown,
   LoginCredentialsDTO,
   RegisterCredentialsDTO
