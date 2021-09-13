@@ -1,10 +1,7 @@
-import * as z from 'zod';
-
-import { Form, InputField } from '@/components/Form';
-import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/Elements';
-import { useForm } from 'react-hook-form';
-import { SubmitHandler } from 'react-hook-form';
+import { InputField } from '@/components/Form';
+import { useAuth } from '@/lib/auth';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type LoginValues = {
   username: string;
@@ -19,7 +16,7 @@ export const LoginForm = () => {
     const { success, ...newValues }: any = await login(values);
     if (!success) {
       Object.keys(newValues).map((key) => {
-        setError(key, {
+        return setError(key, {
           message: newValues[key],
         });
       });

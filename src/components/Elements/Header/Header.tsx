@@ -9,10 +9,13 @@ import IconMED from '@/assets/icon/iconmedium.svg';
 import IconSEARCH from '@/assets/icon/iconsearch.svg';
 import IconPERSON from '@/assets/icon/iconperson.svg';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/lib/auth';
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
+  const { user }: any = useAuth();
+  const existUser = user && Object.keys(user).includes('profile');
   return (
     <S.Header>
       <S.HeaderBG>
@@ -102,9 +105,9 @@ export const Header: React.FC<HeaderProps> = () => {
             <S.HeaderAccountLink to="">
               <img src={IconSEARCH} alt="" />
             </S.HeaderAccountLink>
-            <Link className="flex p-5 items-center" to="/auth">
+            <Link className="flex p-5 items-center" to={existUser ? '/profile' : '/auth'}>
               <img src={IconPERSON} alt="" className="inline-block mr-5" />
-              <span>Đăng Nhập</span>
+              <span>{existUser ? user?.profile?.fullName : 'Đăng Nhập'}</span>
             </Link>
           </S.HeaderAccount>
         </S.HeaderCenter>

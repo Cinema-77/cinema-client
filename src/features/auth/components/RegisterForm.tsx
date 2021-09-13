@@ -28,7 +28,7 @@ type Address = {
 };
 
 export const RegisterForm = () => {
-  const { register, isRegistering, error } = useAuth();
+  const { register, isRegistering } = useAuth();
   const { register: registerForm, formState, watch, handleSubmit, setError } = useForm();
   const [address, setAdress] = useState<Address>({ districts: [], wards: [] });
   const citiesQuery = useCities();
@@ -40,7 +40,7 @@ export const RegisterForm = () => {
       let code = cityCode.split('-');
       if (code.length > 1) {
         setAdress({ districts: [], wards: [] });
-        getDistrict(code[0]).then((res) => setAdress({ ...address, districts: res.districts }));
+        getDistrict(code[0]).then((res) => setAdress({ districts: res.districts, wards: [] }));
       }
     }
   }, [cityCode]);
@@ -53,6 +53,7 @@ export const RegisterForm = () => {
         getWards(code[0]).then((res) => setAdress({ ...address, wards: res.wards }));
       }
     }
+    // eslint-disable-next-line
   }, [districtCode]);
 
   const onSubmit: SubmitHandler<RegisterValues> = async (data: RegisterValues) => {

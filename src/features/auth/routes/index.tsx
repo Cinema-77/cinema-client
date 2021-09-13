@@ -1,6 +1,6 @@
 import { useAuth } from '@/lib/auth';
 import React from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { LoginForm } from '../components/LoginForm';
 import { RegisterForm } from '../components/RegisterForm';
@@ -8,10 +8,9 @@ import { RegisterForm } from '../components/RegisterForm';
 interface AuthProps {}
 
 export const Auth: React.FC<AuthProps> = () => {
-  const router = useHistory();
   const { user }: any = useAuth();
 
-  if (user && Object.keys(user).includes('email')) {
+  if (user && Object.keys(user).includes('profile')) {
     return <Redirect to="/" />;
   }
 
