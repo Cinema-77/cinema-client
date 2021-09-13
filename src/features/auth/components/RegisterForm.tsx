@@ -4,7 +4,7 @@ import { useAuth } from '@/lib/auth';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getDistrict, getWards, useCities } from '..';
+import { getDistrict, getWards, registerWithEmailAndPassword, useCities } from '..';
 
 import { District, Ward } from '../types';
 
@@ -68,9 +68,16 @@ export const RegisterForm = () => {
       ward: newWard[1],
       street,
     };
-    const { success, ...newValue }: any = await register({ ...newData, dateOfBirth, address });
-    if (!success) {
-      Object.keys(newValue).map((s) => setError(s, { message: newValue[s] }));
+    const { values, errors } = await registerWithEmailAndPassword({
+      ...newData,
+      dateOfBirth,
+      address,
+    });
+
+    if (!errors) {
+      Object.keys(errors).map((s) => setError(s, { message: errors[s] }));
+    } else {
+      await register(values);
     }
   };
   return (

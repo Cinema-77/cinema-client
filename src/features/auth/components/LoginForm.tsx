@@ -2,6 +2,7 @@ import { Button } from '@/components/Elements';
 import { InputField } from '@/components/Form';
 import { useAuth } from '@/lib/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { loginWithEmailAndPassword } from '..';
 
 type LoginValues = {
   username: string;
@@ -12,14 +13,17 @@ export const LoginForm = () => {
   const { login, isLoggingIn } = useAuth();
   const { register, setError, formState, handleSubmit } = useForm();
 
-  const onSubmit: SubmitHandler<LoginValues> = async (values: LoginValues) => {
-    const { success, ...newValues }: any = await login(values);
-    if (!success) {
-      Object.keys(newValues).map((key) => {
+  const onSubmit: SubmitHandler<LoginValues> = async (data: LoginValues) => {
+    const { values, errors } = await loginWithEmailAndPassword(data);
+
+    if (!errors) {
+      Object.keys(errors).map((key) => {
         return setError(key, {
-          message: newValues[key],
+          message: errors[key],
         });
       });
+    } else {
+      await login(values);
     }
   };
   return (

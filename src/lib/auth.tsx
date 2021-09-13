@@ -1,17 +1,7 @@
-import { initReactQueryAuth } from 'react-query-auth';
-
-import {
-  loginWithEmailAndPassword,
-  getUser,
-  registerWithEmailAndPassword,
-  UserResponse,
-  LoginCredentialsDTO,
-  RegisterCredentialsDTO,
-  AuthUser,
-  AuthErrors,
-} from '@/features/auth';
-import storage from '@/utils/storage';
 import { Spinner } from '@/components/Elements';
+import { AuthUser, getUser, UserResponse } from '@/features/auth';
+import storage from '@/utils/storage';
+import { initReactQueryAuth } from 'react-query-auth';
 
 async function handleUserResponse(data: UserResponse) {
   const { token, user } = data;
@@ -27,22 +17,12 @@ async function loadUser() {
   return null;
 }
 
-async function loginFn(data: LoginCredentialsDTO) {
-  const { values, errors, success } = await loginWithEmailAndPassword(data);
-
-  if (errors) {
-    return { ...errors, success };
-  }
-
+async function loginFn(values: UserResponse) {
   const user = await handleUserResponse(values);
   return user;
 }
 
-async function registerFn(data: RegisterCredentialsDTO) {
-  const { values, errors, success } = await registerWithEmailAndPassword(data);
-  if (errors) {
-    return { ...errors, success };
-  }
+async function registerFn(values: UserResponse) {
   const user = await handleUserResponse(values);
   return user;
 }
@@ -67,8 +47,8 @@ const authConfig = {
 };
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<
-  AuthUser | null | AuthErrors,
+  AuthUser | null,
   unknown,
-  LoginCredentialsDTO,
-  RegisterCredentialsDTO
+  UserResponse,
+  UserResponse
 >(authConfig);

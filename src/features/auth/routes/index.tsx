@@ -8,9 +8,9 @@ import { RegisterForm } from '../components/RegisterForm';
 interface AuthProps {}
 
 export const Auth: React.FC<AuthProps> = () => {
-  const { user }: any = useAuth();
+  const { user } = useAuth();
 
-  if (user && Object.keys(user).includes('profile')) {
+  if (user) {
     return <Redirect to="/" />;
   }
 
