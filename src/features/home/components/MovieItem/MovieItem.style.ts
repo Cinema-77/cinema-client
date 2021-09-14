@@ -38,7 +38,7 @@ export const MovieItemOverLay = styled.div`
   background-color: transparent;
   transition: background-color 0.3s ease;
 `;
-export const MovieItemLink = styled(Link)`
+export const MovieItemLink = styled.div`
   display: none;
   position: absolute;
   left: 50%;

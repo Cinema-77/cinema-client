@@ -29,7 +29,7 @@ export const EventItemOverLay = styled.div`
   background-color: transparent;
   transition: background-color 0.3s ease;
 `;
-export const EventItemLink = styled(Link)`
+export const EventItemLink = styled.div`
   display: none;
   position: absolute;
   left: 50%;

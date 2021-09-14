@@ -5,7 +5,7 @@ import { lazyImport } from '@/utils/lazyImport';
 const { Auth } = lazyImport(() => import('@/features/auth'), 'Auth');
 const { Home } = lazyImport(() => import('@/features/home'), 'Home');
 const { NotFound } = lazyImport(() => import('@/components/Elements'), 'NotFound');
-
+const { Account } = lazyImport(() => import('@/features/account'), 'Account');
 const routes: any[] = [
   {
     component: MainLayout,
@@ -20,6 +20,11 @@ const routes: any[] = [
         path: path.auth,
         component: Auth,
         title: 'Đăng nhập',
+      },
+      {
+        path: path.account,
+        component: Account,
+        title: 'Thông tin tài khoản',
       },
       {
         path: path.notFound,

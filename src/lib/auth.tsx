@@ -1,15 +1,7 @@
-import { initReactQueryAuth } from 'react-query-auth';
-
-import {
-  loginWithEmailAndPassword,
-  getUser,
-  registerWithEmailAndPassword,
-  UserResponse,
-  LoginCredentialsDTO,
-  RegisterCredentialsDTO,
-  AuthUser,
-} from '@/features/auth';
+import { Spinner } from '@/components/Elements';
+import { AuthUser, getUser, UserResponse } from '@/features/auth';
 import storage from '@/utils/storage';
+import { initReactQueryAuth } from 'react-query-auth';
 
 async function handleUserResponse(data: UserResponse) {
   const { token, user } = data;
@@ -19,20 +11,18 @@ async function handleUserResponse(data: UserResponse) {
 
 async function loadUser() {
   if (storage.getToken()) {
-    const data = await getUser();
-    return data;
+    const { user } = await getUser();
+    return user;
   }
   return null;
 }
 
-async function loginFn(data: LoginCredentialsDTO) {
-  const { values } = await loginWithEmailAndPassword(data);
+async function loginFn(values: UserResponse) {
   const user = await handleUserResponse(values);
   return user;
 }
 
-async function registerFn(data: RegisterCredentialsDTO) {
-  const { values } = await registerWithEmailAndPassword(data);
+async function registerFn(values: UserResponse) {
   const user = await handleUserResponse(values);
   return user;
 }
@@ -50,8 +40,7 @@ const authConfig = {
   LoaderComponent() {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
-        {/* <Spinner size="xl" /> */}
-        <h2 className="text-lg font-semibold">Loading...</h2>
+        <Spinner size="xl" />
       </div>
     );
   },
@@ -60,6 +49,6 @@ const authConfig = {
 export const { AuthProvider, useAuth } = initReactQueryAuth<
   AuthUser | null,
   unknown,
-  LoginCredentialsDTO,
-  RegisterCredentialsDTO
+  UserResponse,
+  UserResponse
 >(authConfig);
