@@ -12,7 +12,7 @@ export const EventItem = () => {
       {listIMG.map((img, index) => (
         <S.EventIem key={index}>
           <img src={img} alt="" />
-          <S.EventItemOverLay to="">
+          <S.EventItemOverLay>
             <S.EventItemLink to="">Chi Tiết</S.EventItemLink>
           </S.EventItemOverLay>
         </S.EventIem>
