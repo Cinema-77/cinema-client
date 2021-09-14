@@ -1,3 +1,4 @@
+import { Container } from '@/components/Layout/Container';
 import { useAuth } from '@/lib/auth';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
@@ -17,7 +18,7 @@ export const Auth: React.FC<AuthProps> = () => {
   return (
     <main className="bg-my-gray">
       <section className="py-24">
-        <div className="px-4 mx-auto w-full sm:max-w-[540px] md:max-w-[720px] 2lg:max-w-[1140px]">
+        <Container>
           <div className="flex flex-wrap">
             <div className="flex-100 max-w-full md:flex-50 md:max-w-[50%] relative w-full px-4">
               <Layout title="Returning Customer">
@@ -30,7 +31,7 @@ export const Auth: React.FC<AuthProps> = () => {
               </Layout>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
     </main>
   );

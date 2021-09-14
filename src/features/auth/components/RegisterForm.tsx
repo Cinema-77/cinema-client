@@ -167,6 +167,7 @@ export const RegisterForm = () => {
               label="City"
               registration={registerForm('city')}
               title="Thành phố"
+              defaultValue="Thành phố"
               options={citiesQuery?.data.map((city) => ({
                 label: city.name,
                 value: `${city.code}-${city.name}`,
@@ -179,6 +180,7 @@ export const RegisterForm = () => {
             label="District"
             registration={registerForm('district')}
             title="Quận/Huyện"
+            defaultValue="Quận/Huyện"
             options={address?.districts.map((d: any) => ({
               label: d.name,
               value: `${d.code}-${d.name}`,
@@ -190,6 +192,7 @@ export const RegisterForm = () => {
             label="Ward"
             registration={registerForm('ward')}
             title="Phường/Xã"
+            defaultValue="Phường/Xã"
             options={address?.wards.map((ward) => ({
               label: ward.name,
               value: `${ward.code}-${ward.name}`,

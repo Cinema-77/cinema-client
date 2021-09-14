@@ -1,6 +1,7 @@
 import { Button } from '@/components/Elements';
 import { InputField } from '@/components/Form';
 import { useAuth } from '@/lib/auth';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { loginWithEmailAndPassword } from '..';
 
@@ -10,19 +11,23 @@ type LoginValues = {
 };
 
 export const LoginForm = () => {
-  const { login, isLoggingIn } = useAuth();
+  const { login } = useAuth();
   const { register, setError, formState, handleSubmit } = useForm();
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<LoginValues> = async (data: LoginValues) => {
+    setIsLoggingIn(!isLoggingIn);
     const { values, errors } = await loginWithEmailAndPassword(data);
 
     if (errors) {
+      setIsLoggingIn(false);
       Object.keys(errors).map((key) => {
         return setError(key, {
           message: errors[key],
         });
       });
     } else {
+      setIsLoggingIn(false);
       login(values);
     }
   };

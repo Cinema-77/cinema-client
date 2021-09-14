@@ -36,3 +36,11 @@ a {
     margin: 0 auto;
   }
 }
+
+.dropright-toogle::after {
+  content: '\e930';
+  float: right;
+  font-family: 'Feather';
+  margin-left: 0.225em;
+  border: 0;
+}

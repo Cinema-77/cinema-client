@@ -43,7 +43,7 @@ export const SelectField = (props: SelectFieldProps) => {
         defaultValue={defaultValue}
         {...registration}
       >
-        {title && <option value={''}></option>}
+        {title && <option disabled>{title}</option>}
         {options.map(({ label, value }) => (
           <option key={label?.toString()} value={value}>
             {label}

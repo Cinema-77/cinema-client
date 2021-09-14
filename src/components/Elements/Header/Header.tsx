@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = () => {
             <S.HeaderAccountLink to="">
               <img src={IconSEARCH} alt="" />
             </S.HeaderAccountLink>
-            <Link className="flex p-5 items-center" to={user ? '/profile' : '/auth'}>
+            <Link className="flex p-5 items-center" to={user ? '/account' : '/auth'}>
               <img src={IconPERSON} alt="" className="inline-block mr-5" />
               <span>{user ? user?.profile?.fullName : 'Đăng Nhập'}</span>
             </Link>
