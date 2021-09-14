@@ -12,7 +12,7 @@ async function handleUserResponse(data: UserResponse) {
 async function loadUser() {
   if (storage.getToken()) {
     const { user } = await getUser();
-    return user as AuthUser;
+    return user;
   }
   return null;
 }

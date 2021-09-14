@@ -22,7 +22,7 @@ export interface AuthResponse {
   message: string;
   values: UserResponse;
   errors?: any;
-  user?: AuthUser;
+  user: AuthUser;
 }
 
 export interface Cities {

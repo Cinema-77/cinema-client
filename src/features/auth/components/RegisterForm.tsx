@@ -74,10 +74,10 @@ export const RegisterForm = () => {
       address,
     });
 
-    if (!errors) {
+    if (errors) {
       Object.keys(errors).map((s) => setError(s, { message: errors[s] }));
     } else {
-      await register(values);
+      register(values);
     }
   };
   return (

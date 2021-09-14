@@ -16,14 +16,14 @@ export const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginValues> = async (data: LoginValues) => {
     const { values, errors } = await loginWithEmailAndPassword(data);
 
-    if (!errors) {
+    if (errors) {
       Object.keys(errors).map((key) => {
         return setError(key, {
           message: errors[key],
         });
       });
     } else {
-      await login(values);
+      login(values);
     }
   };
   return (
