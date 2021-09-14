@@ -11,9 +11,13 @@ export const Footer = styled.footer`
   padding-top: 9.6rem;
 `;
 export const FooterForm = styled.section`
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
+
+  @media (max-width: 640px) {
+    padding: 0 0.8rem;
+  }
 `;
 export const FooterFormTitle = styled.h2`
   margin-bottom: 2rem;
@@ -21,6 +25,12 @@ export const FooterFormTitle = styled.h2`
   line-height: 28.8px;
   font-weight: 500;
   color: #fff;
+
+  @media (max-width: 640px) {
+    width: 80%;
+    margin: 0 auto 2rem auto;
+    font-size: 2rem;
+  }
 `;
 export const FooterFormList = styled.form`
   display: flex;
@@ -30,6 +40,11 @@ export const FooterFormList = styled.form`
 export const FooterFormDiv = styled.div`
   min-width: 500px;
   padding: 0 1rem;
+
+  @media (max-width: 640px) {
+    min-width: 0;
+    width: 100%;
+  }
 `;
 export const FooterFormInput = styled.input`
   width: 100%;
@@ -39,6 +54,9 @@ export const FooterFormInput = styled.input`
   border: 1px solid #303030;
   background-color: #303030;
   color: #fff;
+
+  @media (max-width: 640px) {
+  }
 `;
 export const FooterFormButton = styled.button`
   padding: 1.7rem 3rem;
@@ -51,6 +69,10 @@ export const FooterFormButton = styled.button`
     background-color: #4c4c4c;
     border: 1px solid #4c4c4c;
   }
+
+  @media (max-width: 640px) {
+    width: 50%;
+  }
 `;
 export const FooterContact = styled.section`
   margin-top: 5rem;
@@ -59,12 +81,33 @@ export const FooterContact = styled.section`
 export const FooterContactList = styled.div`
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  gap: 0 3rem;
+
+  @media (max-width: 1024px) {
+    padding: 0 4.8rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 4rem;
+  }
+  @media (max-width: 640px) {
+    flex-wrap: wrap;
+    padding: 0 1.6rem;
+  }
 `;
 export const FooterContactItem = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 2rem 0;
+
+  @media (max-width: 640px) {
+    &:not(:first-child) {
+      margin-top: 3.2rem;
+      width: calc(50% - 1.5rem);
+    }
+  }
 `;
 export const FooterContactHeading = styled.h2`
   font-size: 2.8rem;
@@ -120,6 +163,18 @@ export const FooterBotList = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 1024px) {
+    padding: 0 4.8rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 4rem;
+  }
+
+  @media (max-width: 640px) {
+    padding: 0 1.6rem;
+  }
 `;
 export const FooterBotName = styled.span`
   color: #737373;
@@ -136,6 +191,11 @@ export const FooterBotPay = styled.div`
   img {
     width: 4.5rem;
     height: 4.5rem;
+
+    @media (max-width: 640px) {
+      width: 3rem;
+      height: 3rem;
+    }
   }
 `;
 export const FooterSocial = styled.div`

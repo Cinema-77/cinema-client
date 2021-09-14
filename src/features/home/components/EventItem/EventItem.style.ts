@@ -7,8 +7,19 @@ export const EventItemlist = styled.div`
   grid-template-areas:
     'h1 h2 h2'
     'h3 h3 h4';
+
+  @media (max-width: 1024px) {
+    padding: 0 3.2rem;
+  }
+
+  @media (max-width: 640px) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.6rem;
+    grid-gap: 1.5rem;
+  }
 `;
-export const EventItemOverLay = styled(Link)`
+export const EventItemOverLay = styled.div`
   position: absolute;
   left: 0;
   right: 0;
@@ -66,5 +77,17 @@ export const EventIem = styled.div`
   img {
     width: 100%;
     height: 400px;
+
+    @media (max-width: 1024px) {
+      height: 300px;
+    }
+
+    @media (max-width: 768px) {
+      height: 250px;
+    }
+
+    @media (max-width: 640px) {
+      height: 100%;
+    }
   }
 `;

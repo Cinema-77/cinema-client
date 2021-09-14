@@ -11,7 +11,19 @@ export const HeaderTop = styled.section`
   justify-content: space-between;
   align-items: center;
   gap: 0 4rem;
-  padding: 0.25rem 0;
+  padding: 0.4rem 0;
+
+  @media (max-width: 1024px) {
+    padding: 0.8rem 3.2rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 3.2rem;
+  }
+
+  @media (max-width: 640px) {
+    padding: 0.4rem 1.6rem;
+  }
 `;
 export const HeaderInfo = styled.ul`
   display: flex;
@@ -56,6 +68,10 @@ export const HeaderInfoSelectWrapper = styled.div`
   &:hover ${HeaderInfoSelectList} {
     display: flex;
   }
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 export const HeaderInfoSelectItem = styled.span`
   padding: 0.8rem 1rem;
@@ -75,12 +91,29 @@ export const HeaderInfoSelectItem = styled.span`
 
 export const HeaderInfoSpan = styled.span`
   text-transform: uppercase;
-  color: #000;
+  color: rgb(17, 17, 17);
   font-weight: 500;
   font-size: 1.4rem;
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 0.9rem;
+  }
+`;
+export const HeaderInfoSpann = styled.span`
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 export const HeaderHelper = styled.section`
   display: flex;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 export const HeaderHelperLink = styled(Link)`
   padding: 8px 16px;
@@ -103,6 +136,10 @@ export const HeaderAccount = styled.section`
     height: 1.5rem;
     margin-bottom: 2px;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const HeaderAccountLink = styled(Link)`
   font-size: 1.6rem;
@@ -116,6 +153,10 @@ export const HeaderAccountLink = styled(Link)`
 export const HeaderSocial = styled.section`
   display: flex;
   gap: 0 2rem;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const HeaderSocialLink = styled(Link)`
@@ -129,23 +170,45 @@ export const HeaderSocialLink = styled(Link)`
   }
 `;
 
-export const HeaderCenter = styled.section`
+export const HeaderCenter = styled.section``;
+export const HeaderCenterr = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0 4rem;
   margin-top: 2rem;
+
+  @media (max-width: 1024px) {
+    padding: 0 3.2rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 3.2rem;
+  }
+
+  @media (max-width: 640px) {
+    padding: 0 1.6rem;
+  }
 `;
 export const HeaderLogo = styled(Link)`
   font-size: 4rem;
   color: #000;
   font-weight: 700;
+
+  @media (max-width: 1024px) {
+    font-size: 2.8rem;
+  }
 `;
 export const HeaderList = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const HeaderSubList = styled.ul`
   position: absolute;
@@ -176,7 +239,7 @@ export const HeaderItem = styled.li`
   position: relative;
   cursor: pointer;
   color: #000;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1.6rem;
   line-height: 3rem;
   padding: 8px 16px;
@@ -211,4 +274,125 @@ export const HeaderBottom = styled.section`
   text-transform: uppercase;
   padding: 1.4rem 0;
   margin: 1.6rem 0;
+`;
+
+export const HeaderNavbar = styled.a`
+  display: none;
+
+  img {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
+`;
+export const NavbarList = styled.ul`
+  display: none;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  padding: 0 3.2rem;
+  z-index: 1;
+  background-color: #f5f5f5;
+  @media (max-width: 1024px) {
+    display: ${({ Menu }: any) => (!Menu ? 'none' : 'block')};
+  }
+` as any;
+export const NavbarItem = styled.li`
+  padding: 1rem 0;
+  font-weight: 600;
+  color: rgb(17, 17, 17);
+  font-size: 1.4rem;
+  display: flex;
+  gap: 0 1rem;
+`;
+export const NavbarItemLink = styled(Link)`
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`;
+export const NavbarItemDropdown = styled.div`
+  display: none;
+  left: 0;
+  top: 100%;
+`;
+export const NavbarSelect = styled.div`
+  font-weight: 600;
+  color: rgb(17, 17, 17);
+  font-size: 1.4rem;
+
+  &:hover {
+    color: red;
+  }
+
+  &:hover svg {
+    fill: red;
+  }
+  svg {
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(-90deg);
+  }
+
+  &:hover ${NavbarItemDropdown} {
+    display: block;
+  }
+`;
+export const NavbarSelectTitle = styled.h2`
+  padding: 1rem 0;
+`;
+export const NavbarSelectItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const NavbarItemDropdownItem = styled.h2`
+  padding: 0.8rem 1rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: rgb(17, 17, 17);
+`;
+export const HeaderNavbarList = styled.ul`
+  display: none;
+  width: 100%;
+  padding: 0 3.2rem;
+  background-color: #fff;
+
+  @media (max-width: 768px) {
+    display: ${({ menu }: any) => (!menu ? 'none' : 'block')};
+  }
+` as any;
+export const HeaderNavbarSubList = styled.ul`
+  display: none;
+  flex-direction: column;
+  padding: 1rem 1.6rem;
+`;
+export const HeaderNavbarLink = styled(Link)`
+  color: rgb(17, 17, 17);
+  font-size: 1.6rem;
+  font-weight: 500;
+
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`;
+export const HeaderNavbarItem = styled.li`
+  gap: 0 1rem;
+  padding-top: 0.8rem;
+
+  &:hover ${HeaderNavbarSubList} {
+    display: flex;
+  }
+
+  &:hover ${HeaderNavbarLink} {
+    color: rgb(255, 111, 97);
+  }
+`;
+
+export const HeaderNavbarSubLink = styled(Link)`
+  padding-top: 0.8rem;
 `;

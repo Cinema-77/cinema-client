@@ -9,6 +9,10 @@ export const MovieTitle = styled.h1`
   font-weight: 600;
   line-height: 4.32rem;
   margin-bottom: 3rem;
+
+  @media (max-width: 640px) {
+    font-size: 4rem;
+  }
 `;
 export const MovieListSpan = styled.div`
   margin-bottom: 4rem;
@@ -32,5 +36,9 @@ export const MovieLink = styled.button`
 
   &:hover {
     color: #ff6f61;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 1.4rem;
   }
 ` as any;

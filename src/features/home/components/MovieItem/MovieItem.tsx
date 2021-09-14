@@ -13,8 +13,10 @@ export const MovieItem: React.FC<MovieItemProps> = ({ image }) => {
           <S.MovieItemIMG>
             <img src={img.film} alt="" />
 
+
             <S.MovieItemOverLay to="">
               <S.MovieItemLink>Mua vé</S.MovieItemLink>
+
             </S.MovieItemOverLay>
           </S.MovieItemIMG>
           <S.MovieItemNameEng>{img.titleEN}</S.MovieItemNameEng>
