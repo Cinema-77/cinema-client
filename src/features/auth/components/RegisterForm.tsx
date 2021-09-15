@@ -65,11 +65,12 @@ export const RegisterForm = () => {
     let newWard = ward.split('-');
     let newDistrict = district.split('-');
     const address = {
-      city: newCity[1],
-      district: newDistrict[1],
-      ward: newWard[1],
+      city: newCity[1] || '',
+      district: newDistrict[1] || '',
+      ward: newWard[1] || '',
       street,
     };
+
     const { values, errors } = await registerWithEmailAndPassword({
       ...newData,
       dateOfBirth,
@@ -175,6 +176,7 @@ export const RegisterForm = () => {
               registration={registerForm('city')}
               title="Thành phố"
               defaultValue="Thành phố"
+              error={formState.errors['city']}
               options={citiesQuery?.data.map((city) => ({
                 label: city.name,
                 value: `${city.code}-${city.name}`,
@@ -186,6 +188,7 @@ export const RegisterForm = () => {
           <SelectField
             label="District"
             registration={registerForm('district')}
+            error={formState.errors['district']}
             title="Quận/Huyện"
             defaultValue="Quận/Huyện"
             options={address?.districts.map((d: any) => ({
@@ -198,6 +201,7 @@ export const RegisterForm = () => {
           <SelectField
             label="Ward"
             registration={registerForm('ward')}
+            error={formState.errors['ward']}
             title="Phường/Xã"
             defaultValue="Phường/Xã"
             options={address?.wards.map((ward) => ({
