@@ -22,14 +22,15 @@ type RegisterValues = {
   password: string;
   confirmPassword: string;
 };
-type Address = {
+export type Address = {
   districts: District[];
   wards: Ward[];
 };
 
 export const RegisterForm = () => {
-  const { register, isRegistering } = useAuth();
+  const { register } = useAuth();
   const { register: registerForm, formState, watch, handleSubmit, setError } = useForm();
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [address, setAdress] = useState<Address>({ districts: [], wards: [] });
   const citiesQuery = useCities();
   const cityCode = watch('city');
@@ -57,6 +58,7 @@ export const RegisterForm = () => {
   }, [districtCode]);
 
   const onSubmit: SubmitHandler<RegisterValues> = async (data: RegisterValues) => {
+    setIsRegistering(!isRegistering);
     const { date, month, year, street, city, ward, district, ...newData } = data;
     const dateOfBirth = `${date}/${month}/${year}`;
     let newCity = city.split('-');
@@ -76,8 +78,10 @@ export const RegisterForm = () => {
 
     if (errors) {
       Object.keys(errors).map((s) => setError(s, { message: errors[s] }));
+      setIsRegistering(false);
     } else {
       register(values);
+      setIsRegistering(false);
     }
   };
   return (
@@ -123,7 +127,7 @@ export const RegisterForm = () => {
             registration={registerForm('confirmPassword')}
           />
         </div>
-        <div className="flex-100 px-4 max-w-full">
+        <div className="flex-100 px-4 max-w-full flex-grow">
           <label className="text-2xl font-medium mb-2 inline-block">Date of Birth</label>
           <div className="flex flex-wrap ml-[-10px]">
             <div className="flex-0 w-auto max-w-full px-[10px]">
@@ -153,10 +157,13 @@ export const RegisterForm = () => {
                 label="Year"
                 variant="secondary"
                 registration={registerForm('year')}
-                options={[...Array(50)].map((_, index) => ({
-                  label: 2021 - index,
-                  value: 2021 - index,
-                }))}
+                options={[...Array(50)].map((_, index) => {
+                  const yearNow = new Date().getFullYear();
+                  return {
+                    label: yearNow - index,
+                    value: yearNow - index,
+                  };
+                })}
               />
             </div>
           </div>

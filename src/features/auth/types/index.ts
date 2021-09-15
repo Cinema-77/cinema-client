@@ -1,7 +1,16 @@
 interface UserProfile {
   fullName: string;
   dateOfBirth: string;
-  address: string;
+  address: UserAddress;
+}
+
+interface UserAddress {
+  city: string;
+  district: string;
+  ward: string;
+  street: string;
+  lat: string;
+  lng: string;
 }
 
 export interface AuthUser {

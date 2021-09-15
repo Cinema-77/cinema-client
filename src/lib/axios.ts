@@ -8,6 +8,9 @@ function authRequestInterceptor(config: AxiosRequestConfig) {
   if (token) {
     config.headers.authorization = `Bearer ${token}`;
   }
+  if (config.url?.includes('provinces')) {
+    delete config.headers.authorization;
+  }
   config.headers.Accept = 'application/json';
   return config;
 }
