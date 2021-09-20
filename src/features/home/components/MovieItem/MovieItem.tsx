@@ -1,3 +1,4 @@
+import { path } from '@/constants';
 import React from 'react';
 import * as S from './MovieItem.style';
 
@@ -13,7 +14,7 @@ export const MovieItem: React.FC<MovieItemProps> = ({ image }) => {
           <S.MovieItemIMG>
             <img src={img.film} alt="" />
             <S.MovieItemOverLay>
-              <S.MovieItemLink to="">Mua vé</S.MovieItemLink>
+              <S.MovieItemLink to={path.detail}>Chi tiết</S.MovieItemLink>
             </S.MovieItemOverLay>
           </S.MovieItemIMG>
           <S.MovieItemNameEng>{img.titleEN}</S.MovieItemNameEng>
