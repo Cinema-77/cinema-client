@@ -9,6 +9,8 @@ import IconMED from '@/assets/icon/iconmedium.svg';
 import IconSEARCH from '@/assets/icon/iconsearch.svg';
 import IconPERSON from '@/assets/icon/iconperson.svg';
 import IconMenu from '@/assets/icon/menu.svg';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/lib/auth';
 
 interface HeaderProps {}
 
@@ -16,6 +18,8 @@ export const Header: React.FC<HeaderProps> = () => {
   const [Menu, setMenu] = useState(false);
   const [Menu1, setMenu1] = useState(false);
   const [changeLanguage, setChangeLanguage] = useState('English');
+  const { user } = useAuth();
+
   return (
     <S.Header>
       <S.HeaderBG>
@@ -183,10 +187,10 @@ export const Header: React.FC<HeaderProps> = () => {
               <S.HeaderAccountLink to="">
                 <img src={IconSEARCH} alt="" />
               </S.HeaderAccountLink>
-              <S.HeaderAccountLink to="">
-                <img src={IconPERSON} alt="" />
-              </S.HeaderAccountLink>
-              <S.HeaderAccountLink to="">Đăng Nhập</S.HeaderAccountLink>
+              <Link className="flex p-5 items-center" to={user ? '/account' : '/auth'}>
+                <img src={IconPERSON} alt="" className="inline-block mr-5" />
+                <span>{user ? user?.profile?.fullName : 'Đăng Nhập'}</span>
+              </Link>
             </S.HeaderAccount>
             <S.HeaderNavbar onClick={() => setMenu1(!Menu1)}>
               <img src={IconMenu} alt="" />

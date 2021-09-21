@@ -28,7 +28,7 @@ export const MovieItem = styled.div`
     width: calc((100% / 2) - 1.5rem);
   }
 `;
-export const MovieItemOverLay = styled.div`
+export const MovieItemOverLay = styled(Link)`
   position: absolute;
   left: 0;
   right: 0;
@@ -38,7 +38,7 @@ export const MovieItemOverLay = styled.div`
   background-color: transparent;
   transition: background-color 0.3s ease;
 `;
-export const MovieItemLink = styled(Link)`
+export const MovieItemLink = styled.div`
   display: none;
   position: absolute;
   left: 50%;
@@ -79,10 +79,6 @@ export const MovieItemNameEng = styled.h2`
     font-size: 1.4rem;
   }
 `;
-export const MovieItemNameVNI = styled.h2`
+export const MovieItemNameVNI = styled(MovieItemNameEng)`
   color: #a0a3a7;
-
-  @media (max-width: 640px) {
-    font-size: 1.4rem;
-  }
 `;

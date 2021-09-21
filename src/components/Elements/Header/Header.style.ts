@@ -221,9 +221,9 @@ export const HeaderSubList = styled.ul`
   color: #505050;
   min-width: 190px;
   padding: 3px;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   background-color: #fff;
-  z-index: 1;
+  z-index: 2;
 
   &::before {
     content: '';

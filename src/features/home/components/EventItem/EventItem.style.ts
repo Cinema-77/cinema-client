@@ -19,7 +19,7 @@ export const EventItemlist = styled.div`
     grid-gap: 1.5rem;
   }
 `;
-export const EventItemOverLay = styled.div`
+export const EventItemOverLay = styled(Link)`
   position: absolute;
   left: 0;
   right: 0;
@@ -29,7 +29,7 @@ export const EventItemOverLay = styled.div`
   background-color: transparent;
   transition: background-color 0.3s ease;
 `;
-export const EventItemLink = styled(Link)`
+export const EventItemLink = styled.div`
   display: none;
   position: absolute;
   left: 50%;

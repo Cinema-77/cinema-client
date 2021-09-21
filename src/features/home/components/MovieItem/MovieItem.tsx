@@ -9,10 +9,11 @@ interface MovieItemProps {
 export const MovieItem: React.FC<MovieItemProps> = ({ image }) => {
   return (
     <S.MovieList>
-      {image.slice(0, 6).map((img: any, index: any) => (
+      {image.slice(0, 6).map((img: any, index: number) => (
         <S.MovieItem key={index}>
           <S.MovieItemIMG>
             <img src={img.film} alt="" />
+
             <S.MovieItemOverLay>
               <S.MovieItemLink to={path.detail}>Chi tiết</S.MovieItemLink>
             </S.MovieItemOverLay>
