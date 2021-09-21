@@ -10,7 +10,6 @@ const { MovieDetail } = lazyImport(() => import('@/features/home'), 'MovieDetail
 const { Account } = lazyImport(() => import('@/features/account'), 'Account');
 const { PersonalInfo } = lazyImport(() => import('@/features/account'), 'PersonalInfo');
 
-
 const routes: any[] = [
   {
     component: MainLayout,
@@ -27,13 +26,12 @@ const routes: any[] = [
         title: 'Đăng nhập',
       },
       {
-       feature-home
         path: path.detail,
         component: MovieDetail,
         title: 'Name Movie',
       },
       {
-       path: path.account,
+        path: path.account,
         component: Account,
         auth: true,
         title: 'Thông tin tài khoản',
@@ -42,7 +40,8 @@ const routes: any[] = [
             path: '/account',
             component: PersonalInfo,
           },
-        ]},
+        ],
+      },
       {
         path: path.notFound,
         component: NotFound,

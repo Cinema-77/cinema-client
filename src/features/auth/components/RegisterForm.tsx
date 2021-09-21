@@ -129,7 +129,7 @@ export const RegisterForm = () => {
           />
         </div>
         <div className="flex-100 px-4 max-w-full flex-grow">
-          <label className="text-2xl font-medium mb-2 inline-block">Date of Birth</label>
+          <label className="text-2xl font-medium mb-2 inline-block">Date of Birth *</label>
           <div className="flex flex-wrap ml-[-10px]">
             <div className="flex-0 w-auto max-w-full px-[10px]">
               <SelectField
@@ -172,7 +172,7 @@ export const RegisterForm = () => {
         <div className="flex-50 px-4 max-w-[50%]">
           {citiesQuery.data && (
             <SelectField
-              label="City"
+              label="City *"
               registration={registerForm('city')}
               title="Thành phố"
               defaultValue="Thành phố"
@@ -186,7 +186,7 @@ export const RegisterForm = () => {
         </div>
         <div className="flex-50 px-4 max-w-[50%]">
           <SelectField
-            label="District"
+            label="District *"
             registration={registerForm('district')}
             error={formState.errors['district']}
             title="Quận/Huyện"
@@ -199,7 +199,7 @@ export const RegisterForm = () => {
         </div>
         <div className="flex-50 px-4 max-w-[50%]">
           <SelectField
-            label="Ward"
+            label="Ward *"
             registration={registerForm('ward')}
             error={formState.errors['ward']}
             title="Phường/Xã"

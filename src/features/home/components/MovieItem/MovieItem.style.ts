@@ -28,7 +28,7 @@ export const MovieItem = styled.div`
     width: calc((100% / 2) - 1.5rem);
   }
 `;
-export const MovieItemOverLay = styled(Link)`
+export const MovieItemOverLay = styled.div`
   position: absolute;
   left: 0;
   right: 0;
@@ -38,7 +38,7 @@ export const MovieItemOverLay = styled(Link)`
   background-color: transparent;
   transition: background-color 0.3s ease;
 `;
-export const MovieItemLink = styled.div`
+export const MovieItemLink = styled(Link)`
   display: none;
   position: absolute;
   left: 50%;
