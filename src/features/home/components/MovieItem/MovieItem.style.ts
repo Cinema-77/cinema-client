@@ -62,7 +62,8 @@ export const MovieItemIMG = styled.div`
 
   img {
     width: 100%;
-    height: 100%;
+    height: 253px;
+    object-fit: cover;
   }
 
   &:hover ${MovieItemOverLay} {

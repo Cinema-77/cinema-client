@@ -9,6 +9,7 @@ const { NotFound } = lazyImport(() => import('@/components/Elements'), 'NotFound
 const { MovieDetail } = lazyImport(() => import('@/features/home'), 'MovieDetail');
 const { Account } = lazyImport(() => import('@/features/account'), 'Account');
 const { PersonalInfo } = lazyImport(() => import('@/features/account'), 'PersonalInfo');
+const { Bookticket } = lazyImport(() => import('@/features/ticket'), 'Bookticket');
 
 const routes: any[] = [
   {
@@ -29,6 +30,11 @@ const routes: any[] = [
         path: path.detail,
         component: MovieDetail,
         title: 'Name Movie',
+      },
+      {
+        path: path.bookTicket,
+        component: Bookticket,
+        title: 'Book Ticket',
       },
       {
         path: path.account,

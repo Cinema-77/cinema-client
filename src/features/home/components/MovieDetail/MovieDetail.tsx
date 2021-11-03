@@ -1,115 +1,387 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as S from './MovieDetail.style';
-import toggle from '@/assets/img/toggle.png';
-interface MovieDetailProps {}
+import { dateType, getListShowTime, getLocations, MovieItemType, showTimesProps } from '../..';
+import { useHistory, useLocation } from 'react-router';
+import qs from 'query-string';
+import { Loading } from '@/features/Loading/Loading';
+import { useAuth } from '@/lib/auth';
+import { getMovieDetail } from '../..';
 
-export const MovieDetail: React.FC<MovieDetailProps> = () => {
-  const [detail, setDetail] = useState(false);
-  const [fontWeight, setFontWeight] = useState(false);
-
+export const MovieDetail = () => {
+  const [isDetail, setIsDetail] = useState<boolean>(true);
+  const [isTrailer, setIsTrailer] = useState<boolean>(false);
+  const [isMovie, setIsMovie] = useState<boolean>(false);
+  const [isShowTime, setIsShowTime] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingShowTime, setIsLoadingShowTime] = useState<boolean>(false);
+  const [screenValue, setScreenValue] = useState<string>('');
+  const [cityValue, setCityValue] = useState<string>('Thành phố Hồ Chí Minh');
+  const [cityList, setCityList] = useState<string[]>([]);
+  const [movieDetail, setMovieDetail] = useState<MovieItemType>();
+  const [date, setDate] = useState<string>(() => {
+    const date2 = new Date();
+    return Number(date2.getMonth() + 1) + '/' + date2.getDay() + '/' + date2.getFullYear();
+  });
+  const { user } = useAuth();
+  const [timeNow] = useState<string>(() => {
+    const date1 = new Date();
+    const hour = date1.getHours();
+    const minutes = date1.getMinutes() < 10 ? `0${date1.getMinutes()}` : date1.getMinutes();
+    return (
+      hour +
+      ':' +
+      minutes +
+      '-' +
+      Number(date1.getMonth() + 1) +
+      '/' +
+      date1.getDay() +
+      '/' +
+      date1.getFullYear()
+    );
+  });
+  const [isActive, setIsActive] = useState<string>(() => {
+    const date = new Date();
+    return Number(date.getDate()) + '/' + Number(date.getMonth() + 1);
+  });
+  const [dateList] = useState<dateType[]>(() => {
+    const date = new Date();
+    const arrayTotal = [];
+    for (let i = 0; i < 6; i++) {
+      const _24HoursInMilliseconds = 86400000;
+      arrayTotal.push({
+        date:
+          Number(new Date(date.getTime() + i * _24HoursInMilliseconds).getDate()) +
+          '/' +
+          Number(new Date(date.getTime() + i * _24HoursInMilliseconds).getMonth() + 1),
+        day:
+          Number(new Date(date.getTime() + i * 86400000).getDay() + 1) === 1
+            ? 'CN'
+            : `Th ${new Date(date.getTime() + i * 86400000).getDay() + 1}`,
+      });
+    }
+    return arrayTotal;
+  });
+  const [showTimes, setShowTimes] = useState<showTimesProps[]>();
+  const location = useLocation();
+  const history = useHistory();
+  const query = useMemo(() => qs.parse(location.search), [location.search]);
+  useEffect(() => {
+    setIsLoading(true);
+    getMovieDetail(query.id).then((res) => {
+      setMovieDetail(res.values.movie);
+      setIsLoading(false);
+    });
+  }, [query]);
+  useEffect(() => {
+    getLocations()
+      .then((res) => setCityList(res.values.locations))
+      .catch((err) => console.log(err));
+  }, []);
+  useEffect(() => {
+    setIsShowTime(false);
+    setIsLoadingShowTime(true);
+    getListShowTime(date, query.id, screenValue, cityValue)
+      .then((res) => {
+        setShowTimes(res.showTimes);
+        setIsLoadingShowTime(false);
+      })
+      .catch((err) => console.log(err));
+  }, [query.id, screenValue, cityValue, date]);
+  const handleDate = (value: string) => {
+    const _value = value.split('/')[1] + '/' + value.split('/')[0] + '/' + new Date().getFullYear();
+    setIsActive(value);
+    setDate(_value);
+  };
+  const handleBookTicket = (id: string, time: string) => {
+    const timeNows = timeNow.split('-');
+    const times = [time, date];
+    if (timeNows[1] < times[1]) {
+      if (user) {
+        timeNow < time && history.push(`/book-ticket/?id=${id}`);
+      } else {
+        history.push('/auth');
+      }
+    } else if (timeNows[1] === times[1]) {
+      if (timeNows[0] < times[0]) {
+        if (user) {
+          timeNow < time && history.push(`/book-ticket/?id=${id}`);
+        } else {
+          history.push('/auth');
+        }
+      } else {
+        return;
+      }
+    }
+  };
+  const handleDisabledShowTime = (time: string) => {
+    const timeNows = timeNow.split('-');
+    const times = [time, date];
+    let checkTime: boolean = false;
+    if (timeNows[1] < times[1]) {
+      checkTime = false;
+    } else if (timeNows[1] === times[1]) {
+      if (timeNows[0] < times[0]) {
+        checkTime = false;
+      } else {
+        checkTime = true;
+      }
+    }
+    return checkTime;
+  };
+  const handleIsDetailMovieTrailer = (isDetail: boolean, isMovie: boolean, isTrailer: boolean) => {
+    setIsDetail(isDetail);
+    setIsMovie(isMovie);
+    setIsTrailer(isTrailer);
+  };
   return (
     <S.MovieDetail>
-      <div className="container">
-        <S.MovieTitle>Nội Dung Phim</S.MovieTitle>
-        <S.MovieList>
-          <S.MovieIMG>
-            <img
-              src="https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/g/o/godzilla_vs_1_.jpg"
-              alt=""
-            />
-          </S.MovieIMG>
-          <S.MovieContent>
-            <S.MovieContentTitle>Godzilla Vs. Kong</S.MovieContentTitle>
-            <S.MovieContentList>
-              <S.MovieContentItem>Đạo diễn:</S.MovieContentItem>
-              <S.MovieContentItem>Adam Wingard</S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentList>
-              <S.MovieContentItem>Diễn viên:</S.MovieContentItem>
-              <S.MovieContentItem>
-                Millie Bobby Brown, Alexander Skarsgård, Rebecca Hall, Eiza González, Kyle Chandler
-              </S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentList>
-              <S.MovieContentItem>Thể loại:</S.MovieContentItem>
-              <S.MovieContentItem>Hành Động, Thần thoại</S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentList>
-              <S.MovieContentItem>Khởi chiếu:</S.MovieContentItem>
-              <S.MovieContentItem>26/03/2021</S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentList>
-              <S.MovieContentItem>Thời lượng:</S.MovieContentItem>
-              <S.MovieContentItem>113 phút</S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentList>
-              <S.MovieContentItem>Ngôn ngữ:</S.MovieContentItem>
-              <S.MovieContentItem>
-                Tiếng Anh - Phụ đề Tiếng Việt, Phụ đề Tiếng Hàn - Tiếng Việt
-              </S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentList>
-              <S.MovieContentItem>Rated:</S.MovieContentItem>
-              <S.MovieContentItem style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>
-                C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI
-              </S.MovieContentItem>
-            </S.MovieContentList>
-            <S.MovieContentBtn to="">Mua Vé</S.MovieContentBtn>
-          </S.MovieContent>
-        </S.MovieList>
-        <S.MovieTrailer>
-          <S.MovieTrailerTitle>
-            {!fontWeight && (
-              <S.MovieTrailerSpan>
-                <img src={toggle} alt="" />
-              </S.MovieTrailerSpan>
-            )}
-            <S.MovieTrailerSpan
-              fW={!fontWeight}
-              onClick={() => {
-                setFontWeight(false);
-                setDetail(false);
-              }}
-            >
-              Chi tiết
-            </S.MovieTrailerSpan>
-            <S.MovieTrailerSpan>|</S.MovieTrailerSpan>
-            {fontWeight && (
-              <S.MovieTrailerSpan>
-                <img src={toggle} alt="" />
-              </S.MovieTrailerSpan>
-            )}
-            <S.MovieTrailerSpan
-              fW={fontWeight}
-              onClick={() => {
-                setFontWeight(true);
-                setDetail(true);
-              }}
-            >
-              Trailer
-            </S.MovieTrailerSpan>
-          </S.MovieTrailerTitle>
-          {!detail && (
-            <S.MovieTrailerContent>
-              Khi hai kẻ thù truyền kiếp gặp nhau trong một trận chiến ngoạn mục, số phận của cả thế
-              giới vẫn còn bị bỏ ngỏ… Bị đưa khỏi Đảo Đầu Lâu, Kong cùng Jia, một cô bé mồ côi có
-              mối liên kết mạnh mẽ với mình và đội bảo vệ đặc biệt hướng về mái nhà mới. Bất ngờ,
-              nhóm đụng độ phải Godzilla hùng mạnh, tạo ra một làn sóng hủy diệt trên toàn cầu. Thực
-              chất, cuộc chiến giữa hai kẻ khổng lồ dưới sự thao túng của các thế lực vô hình mới
-              chỉ là điểm khởi đầu để khám phá những bí ẩn nằm sâu trong tâm Trái đất.
-            </S.MovieTrailerContent>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="container">
+          <S.MovieTitle>Nội Dung Phim</S.MovieTitle>
+          {movieDetail && (
+            <S.MovieList>
+              <S.MovieIMG>
+                <img src={movieDetail.image} alt="" />
+              </S.MovieIMG>
+              <S.MovieContent>
+                <S.MovieContentTitle>{movieDetail.name}</S.MovieContentTitle>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Đạo diễn:</S.MovieContentItem>
+                  <S.MovieContentItem>{movieDetail.director.name}</S.MovieContentItem>
+                </S.MovieContentList>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Diễn viên:</S.MovieContentItem>
+                  <S.MovieContentItem>{movieDetail.cast}</S.MovieContentItem>
+                </S.MovieContentList>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Thể loại:</S.MovieContentItem>
+                  <S.MovieContentItem>
+                    {movieDetail.categories.length > 1 &&
+                      movieDetail.categories.map((category) => (
+                        <span key={category._id}>{category.name}, </span>
+                      ))}
+                    {movieDetail.categories.length === 1 &&
+                      movieDetail.categories.map((category) => (
+                        <span key={category._id}>{category.name}</span>
+                      ))}
+                  </S.MovieContentItem>
+                </S.MovieContentList>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Khởi chiếu:</S.MovieContentItem>
+                  <S.MovieContentItem>26/03/2021</S.MovieContentItem>
+                </S.MovieContentList>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Thời lượng:</S.MovieContentItem>
+                  <S.MovieContentItem>{movieDetail.moveDuration}</S.MovieContentItem>
+                </S.MovieContentList>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Ngôn ngữ:</S.MovieContentItem>
+                  <S.MovieContentItem>
+                    Tiếng Anh - Phụ đề Tiếng Việt, Phụ đề Tiếng Hàn - Tiếng Việt
+                  </S.MovieContentItem>
+                </S.MovieContentList>
+                <S.MovieContentList>
+                  <S.MovieContentItem>Rated:</S.MovieContentItem>
+                  <S.MovieContentItem style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>
+                    {movieDetail.age >= 13 &&
+                      movieDetail.age < 16 &&
+                      'C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI'}
+                    {movieDetail.age >= 16 &&
+                      movieDetail.age < 18 &&
+                      'C16 - PHIM CẤM KHÁN GIẢ DƯỚI 16 TUỔI'}
+                    {movieDetail.age > 18 && 'C18 - PHIM CẤM KHÁN GIẢ DƯỚI 18 TUỔI'}
+                    {movieDetail.age < 13 && 'P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG'}
+                  </S.MovieContentItem>
+                </S.MovieContentList>
+              </S.MovieContent>
+            </S.MovieList>
           )}
-          {detail && (
-            <S.MovieTrailerVideo>
-              <S.MovieTrailerVideoVideo
-                frameBorder="0"
-                allowFullScreen
-                src="https://www.youtube.com/embed/yFpuUGFS1Kg"
-              ></S.MovieTrailerVideoVideo>
-            </S.MovieTrailerVideo>
-          )}
-        </S.MovieTrailer>
-      </div>
+          <S.MovieTrailer>
+            <S.MovieTrailerTitle>
+              <S.MovieTrailerSpan
+                fW={isDetail}
+                onClick={() => handleIsDetailMovieTrailer(true, false, false)}
+              >
+                Chi tiết
+              </S.MovieTrailerSpan>
+              <S.MovieTrailerSpan
+                fW={isTrailer}
+                onClick={() => handleIsDetailMovieTrailer(false, false, true)}
+              >
+                Trailer
+              </S.MovieTrailerSpan>
+              <S.MovieTrailerSpan
+                fW={isMovie}
+                onClick={() => handleIsDetailMovieTrailer(false, true, false)}
+              >
+                Lịch chiếu
+              </S.MovieTrailerSpan>
+            </S.MovieTrailerTitle>
+            {isDetail && <S.MovieTrailerContent>{movieDetail?.description}</S.MovieTrailerContent>}
+            {isTrailer && (
+              <S.MovieTrailerVideo>
+                <S.MovieTrailerVideoVideo
+                  frameBorder="0"
+                  allowFullScreen
+                  src={movieDetail?.trailer}
+                ></S.MovieTrailerVideoVideo>
+              </S.MovieTrailerVideo>
+            )}
+            {isMovie && (
+              <S.MovieShowTimes>
+                <S.MovieShowTimesForm>
+                  <S.MovieShowTimesSelect
+                    value={cityValue}
+                    onChange={(e) => setCityValue(e.target.value)}
+                  >
+                    {cityList.map((city, index) => (
+                      <S.MovieShowTimesOptions key={index} value={city}>
+                        {city}
+                      </S.MovieShowTimesOptions>
+                    ))}
+                  </S.MovieShowTimesSelect>
+                  <S.MovieShowTimesSelect
+                    value={screenValue}
+                    onChange={(e) => {
+                      setScreenValue(e.target.value);
+                      setIsShowTime(false);
+                    }}
+                  >
+                    <S.MovieShowTimesOptions value="">Định dạng</S.MovieShowTimesOptions>
+                    {movieDetail?.screens.map((item) => (
+                      <S.MovieShowTimesOptions key={item._id} value={item._id}>
+                        {item.name}
+                      </S.MovieShowTimesOptions>
+                    ))}
+                  </S.MovieShowTimesSelect>
+                </S.MovieShowTimesForm>
+                <S.MovieShowTimesDate>
+                  {dateList.map((date, index) => (
+                    <S.MovieShowTimesDateItem
+                      key={index}
+                      onClick={() => handleDate(date.date)}
+                      active={isActive === date.date}
+                    >
+                      {date.date}
+                      <br />
+                      <span>{date.day}</span>
+                    </S.MovieShowTimesDateItem>
+                  ))}
+                </S.MovieShowTimesDate>
+                <S.MovieShowTimesTheater>
+                  {isLoadingShowTime && <Loading />}
+                  {!isLoadingShowTime && !showTimes?.toString() && (
+                    <S.MovieShowTimesTheaterSpan>
+                      <strong>Hiện tại khu vực : </strong>
+                      {' ' + cityValue + ' không có xuất chiếu nào.'}
+                    </S.MovieShowTimesTheaterSpan>
+                  )}
+                  {!isLoadingShowTime &&
+                    showTimes?.toString() &&
+                    showTimes.map((showTime) => (
+                      <S.MovieShowTimes key={showTime.cinema._id}>
+                        <S.MovieShowTimesList key={showTime.cinema._id}>
+                          <S.MovieShowTimesItem onClick={() => setIsShowTime(!isShowTime)}>
+                            <img
+                              src="https://cdn.moveek.com/media/cache/square/5fffb30b3194c340097683.png"
+                              alt={showTime.cinema.name}
+                            />
+                            <S.MovieShowTimesContent>
+                              <S.MovieShowTimesTitle>{showTime.cinema.name}</S.MovieShowTimesTitle>
+                            </S.MovieShowTimesContent>
+                          </S.MovieShowTimesItem>
+                        </S.MovieShowTimesList>
+                        {isShowTime && (
+                          <S.MovieShowTimeTime>
+                            <S.MovieShowTimeAddress>
+                              {showTime.cinema.address.street}, {showTime.cinema.address.ward},{' '}
+                              {showTime.cinema.address.district}, {showTime.cinema.address.city}.
+                            </S.MovieShowTimeAddress>
+                            {!isLoading && (
+                              <>
+                                {showTime.screen2D.showTimesDetails.toString() && (
+                                  <>
+                                    <S.MovieShowTimeScreen>
+                                      {showTime.screen2D.title} Phụ Đề Anh
+                                    </S.MovieShowTimeScreen>
+                                    <S.MovieShowTimeDiv>
+                                      {showTime.screen2D.showTimesDetails.map((item) => (
+                                        <S.MovieShowTimeTimeScreen
+                                          key={item._id}
+                                          disabled={handleDisabledShowTime(item.timeSlot.time)}
+                                          onClick={() =>
+                                            handleBookTicket(
+                                              item._id,
+                                              item.timeSlot.time + '-' + date
+                                            )
+                                          }
+                                        >
+                                          {item.timeSlot.time}
+                                        </S.MovieShowTimeTimeScreen>
+                                      ))}
+                                    </S.MovieShowTimeDiv>
+                                  </>
+                                )}
+                                {showTime.screen3D.showTimesDetails.toString() && (
+                                  <>
+                                    <S.MovieShowTimeScreen>
+                                      {showTime.screen3D.title} Phụ Đề Anh
+                                    </S.MovieShowTimeScreen>
+                                    <S.MovieShowTimeDiv>
+                                      {showTime.screen3D.showTimesDetails.map((item) => (
+                                        <S.MovieShowTimeTimeScreen
+                                          key={item._id}
+                                          disabled={handleDisabledShowTime(item.timeSlot.time)}
+                                          onClick={() =>
+                                            handleBookTicket(
+                                              item._id,
+                                              item.timeSlot.time + '-' + date
+                                            )
+                                          }
+                                        >
+                                          {item.timeSlot.time}
+                                        </S.MovieShowTimeTimeScreen>
+                                      ))}
+                                    </S.MovieShowTimeDiv>
+                                  </>
+                                )}
+                                {showTime.screenIMAX.showTimesDetails.toString() && (
+                                  <>
+                                    <S.MovieShowTimeScreen>
+                                      {showTime.screenIMAX.title} Phụ Đề Anh
+                                    </S.MovieShowTimeScreen>
+                                    <S.MovieShowTimeDiv>
+                                      {showTime.screenIMAX.showTimesDetails.map((item) => (
+                                        <S.MovieShowTimeTimeScreen
+                                          key={item._id}
+                                          disabled={handleDisabledShowTime(item.timeSlot.time)}
+                                          onClick={() =>
+                                            handleBookTicket(
+                                              item._id,
+                                              item.timeSlot.time + '-' + date
+                                            )
+                                          }
+                                        >
+                                          {item.timeSlot.time}
+                                        </S.MovieShowTimeTimeScreen>
+                                      ))}
+                                    </S.MovieShowTimeDiv>
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </S.MovieShowTimeTime>
+                        )}
+                      </S.MovieShowTimes>
+                    ))}
+                </S.MovieShowTimesTheater>
+              </S.MovieShowTimes>
+            )}
+          </S.MovieTrailer>
+        </div>
+      )}
     </S.MovieDetail>
   );
 };
