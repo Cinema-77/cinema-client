@@ -110,8 +110,11 @@ export interface TicketRespon {
 export interface TicketAdd {
   showTimeDetailId: string | string[] | null;
   payment: {
-    username: string;
-    password: string;
+    // info: {
+    //   username: string;
+    //   type: number;
+    //   otp: string;
+    // };
     type: number;
   };
   data: seatType[];
@@ -133,16 +136,15 @@ export interface billProps {
 export interface TicketAddRespon {
   message: string;
   success: boolean;
-  tickets: seatProps[];
-  bills: {
-    date: string;
-    foodBill: {
-      bill: billProps;
-      data: comboType[];
-    };
-    ticketBill: {
-      bill: billProps;
-      data: seatType[];
-    };
-  };
+  uri: string;
+}
+
+export interface PaymentLoginType {
+  username: string;
+  password: string;
+}
+
+export interface PaymentLoginRespon {
+  success: boolean;
+  message: string;
 }

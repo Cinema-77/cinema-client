@@ -1,5 +1,6 @@
 import { Container } from '@/components/Layout';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '..';
 
 interface NotFoundProps {}
@@ -16,7 +17,9 @@ export const NotFound: React.FC<NotFoundProps> = () => {
               Sorry, we couldn't find the page you where looking for. We suggest that you return to
               home page.
             </p>
-            <Button className="inline-block">Go to Homepage</Button>
+            <Button className="inline-block">
+              <Link to="/">Go to Homepage</Link>
+            </Button>
           </div>
         </div>
       </Container>

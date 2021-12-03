@@ -9,9 +9,10 @@ export const Loading = styled.div`
     content: '';
     width: 50px;
     height: 50px;
-    border: 10px solid #dddddd;
+    border: 4px solid #dddddd;
     border-top-color: #000;
     border-bottom-color: #000;
+    border-left-color: #000;
     border-radius: 50%;
     animation: loading 1s ease infinite;
   }

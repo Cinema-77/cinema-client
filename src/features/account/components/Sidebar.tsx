@@ -15,7 +15,8 @@ export const Sidebar: React.FC<SidebarProps> = () => {
   const { logout } = useAuth();
 
   const userNavigate: UserNavigationItem[] = [
-    { title: 'Vé', url: '/ticket' },
+    { title: 'Lịch sử giao dịch', url: '/ticket' },
+    { title: 'Coupon', url: '/coupon' },
     { title: ' Thông tin cá nhân', url: '' },
     { title: 'Phương thức thanh toán', url: '/payment' },
     { title: 'Đăng xuất', url: '/logout', onClick: () => logout() },

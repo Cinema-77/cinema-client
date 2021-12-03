@@ -7,3 +7,4 @@ export * from './components/EventItem/EventItem';
 export * from './components/MovieDetail/MovieDetail';
 export * from './api/api';
 export * from './type';
+export * from './components/Movie/Movie';

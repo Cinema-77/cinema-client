@@ -9,7 +9,10 @@ const { NotFound } = lazyImport(() => import('@/components/Elements'), 'NotFound
 const { MovieDetail } = lazyImport(() => import('@/features/home'), 'MovieDetail');
 const { Account } = lazyImport(() => import('@/features/account'), 'Account');
 const { PersonalInfo } = lazyImport(() => import('@/features/account'), 'PersonalInfo');
+const { Ticket } = lazyImport(() => import('@/features/account'), 'Ticket');
+const { Coupon } = lazyImport(() => import('@/features/account'), 'Coupon');
 const { Bookticket } = lazyImport(() => import('@/features/ticket'), 'Bookticket');
+const { Movie } = lazyImport(() => import('@/features/home'), 'Movie');
 
 const routes: any[] = [
   {
@@ -25,6 +28,11 @@ const routes: any[] = [
         path: path.auth,
         component: Auth,
         title: 'Đăng nhập',
+      },
+      {
+        path: path.movie,
+        component: Movie,
+        title: 'Danh sách Phim',
       },
       {
         path: path.detail,
@@ -44,7 +52,16 @@ const routes: any[] = [
         routes: [
           {
             path: '/account',
+            exact: true,
             component: PersonalInfo,
+          },
+          {
+            path: '/account/ticket',
+            component: Ticket,
+          },
+          {
+            path: '/account/coupon',
+            component: Coupon,
           },
         ],
       },

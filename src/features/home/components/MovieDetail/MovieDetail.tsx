@@ -6,6 +6,7 @@ import qs from 'query-string';
 import { Loading } from '@/features/Loading/Loading';
 import { useAuth } from '@/lib/auth';
 import { getMovieDetail } from '../..';
+import { CheckAge } from '@/utils/CheckAge';
 
 export const MovieDetail = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
@@ -20,7 +21,7 @@ export const MovieDetail = () => {
   const [movieDetail, setMovieDetail] = useState<MovieItemType>();
   const [date, setDate] = useState<string>(() => {
     const date2 = new Date();
-    return Number(date2.getMonth() + 1) + '/' + date2.getDay() + '/' + date2.getFullYear();
+    return Number(date2.getMonth() + 1) + '/' + date2.getDate() + '/' + date2.getFullYear();
   });
   const { user } = useAuth();
   const [timeNow] = useState<string>(() => {
@@ -34,7 +35,7 @@ export const MovieDetail = () => {
       '-' +
       Number(date1.getMonth() + 1) +
       '/' +
-      date1.getDay() +
+      date1.getDate() +
       '/' +
       date1.getFullYear()
     );
@@ -61,7 +62,7 @@ export const MovieDetail = () => {
     }
     return arrayTotal;
   });
-  const [showTimes, setShowTimes] = useState<showTimesProps[]>();
+  const [showTimes, setShowTimes] = useState<showTimesProps[]>([]);
   const location = useLocation();
   const history = useHistory();
   const query = useMemo(() => qs.parse(location.search), [location.search]);
@@ -93,18 +94,20 @@ export const MovieDetail = () => {
     setDate(_value);
   };
   const handleBookTicket = (id: string, time: string) => {
-    const timeNows = timeNow.split('-');
-    const times = [time, date];
-    if (timeNows[1] < times[1]) {
+    const timeHourNow = timeNow.split('-');
+    const timeDateNow = timeHourNow[1].split('/');
+    const timesHour = time.split('-');
+    const timesDate = timesHour[1].split('/');
+    if (timeDateNow[1] < timesDate[1]) {
       if (user) {
-        timeNow < time && history.push(`/book-ticket/?id=${id}`);
+        history.push(`/book-ticket/?id=${id}`);
       } else {
         history.push('/auth');
       }
-    } else if (timeNows[1] === times[1]) {
-      if (timeNows[0] < times[0]) {
+    } else if (timeDateNow[1] === timesDate[1]) {
+      if (timeHourNow[0] < timesHour[0]) {
         if (user) {
-          timeNow < time && history.push(`/book-ticket/?id=${id}`);
+          history.push(`/book-ticket/?id=${id}`);
         } else {
           history.push('/auth');
         }
@@ -114,13 +117,15 @@ export const MovieDetail = () => {
     }
   };
   const handleDisabledShowTime = (time: string) => {
-    const timeNows = timeNow.split('-');
-    const times = [time, date];
+    const timeHourNow = timeNow.split('-');
+    const timeDateNow = timeHourNow[1].split('/');
+    const timesHour = time.split('-');
+    const timesDate = timesHour[1].split('/');
     let checkTime: boolean = false;
-    if (timeNows[1] < times[1]) {
+    if (timeDateNow[1] < timesDate[1]) {
       checkTime = false;
-    } else if (timeNows[1] === times[1]) {
-      if (timeNows[0] < times[0]) {
+    } else if (timeDateNow[1] === timesDate[1]) {
+      if (timeHourNow[0] < timesHour[0]) {
         checkTime = false;
       } else {
         checkTime = true;
@@ -185,14 +190,7 @@ export const MovieDetail = () => {
                 <S.MovieContentList>
                   <S.MovieContentItem>Rated:</S.MovieContentItem>
                   <S.MovieContentItem style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>
-                    {movieDetail.age >= 13 &&
-                      movieDetail.age < 16 &&
-                      'C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI'}
-                    {movieDetail.age >= 16 &&
-                      movieDetail.age < 18 &&
-                      'C16 - PHIM CẤM KHÁN GIẢ DƯỚI 16 TUỔI'}
-                    {movieDetail.age > 18 && 'C18 - PHIM CẤM KHÁN GIẢ DƯỚI 18 TUỔI'}
-                    {movieDetail.age < 13 && 'P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG'}
+                    <CheckAge age={movieDetail.age} />
                   </S.MovieContentItem>
                 </S.MovieContentList>
               </S.MovieContent>
@@ -284,10 +282,6 @@ export const MovieDetail = () => {
                       <S.MovieShowTimes key={showTime.cinema._id}>
                         <S.MovieShowTimesList key={showTime.cinema._id}>
                           <S.MovieShowTimesItem onClick={() => setIsShowTime(!isShowTime)}>
-                            <img
-                              src="https://cdn.moveek.com/media/cache/square/5fffb30b3194c340097683.png"
-                              alt={showTime.cinema.name}
-                            />
                             <S.MovieShowTimesContent>
                               <S.MovieShowTimesTitle>{showTime.cinema.name}</S.MovieShowTimesTitle>
                             </S.MovieShowTimesContent>
@@ -310,7 +304,9 @@ export const MovieDetail = () => {
                                       {showTime.screen2D.showTimesDetails.map((item) => (
                                         <S.MovieShowTimeTimeScreen
                                           key={item._id}
-                                          disabled={handleDisabledShowTime(item.timeSlot.time)}
+                                          disabled={handleDisabledShowTime(
+                                            item.timeSlot.time + '-' + date
+                                          )}
                                           onClick={() =>
                                             handleBookTicket(
                                               item._id,
@@ -333,7 +329,9 @@ export const MovieDetail = () => {
                                       {showTime.screen3D.showTimesDetails.map((item) => (
                                         <S.MovieShowTimeTimeScreen
                                           key={item._id}
-                                          disabled={handleDisabledShowTime(item.timeSlot.time)}
+                                          disabled={handleDisabledShowTime(
+                                            item.timeSlot.time + '-' + date
+                                          )}
                                           onClick={() =>
                                             handleBookTicket(
                                               item._id,
@@ -356,7 +354,9 @@ export const MovieDetail = () => {
                                       {showTime.screenIMAX.showTimesDetails.map((item) => (
                                         <S.MovieShowTimeTimeScreen
                                           key={item._id}
-                                          disabled={handleDisabledShowTime(item.timeSlot.time)}
+                                          disabled={handleDisabledShowTime(
+                                            item.timeSlot.time + '-' + date
+                                          )}
                                           onClick={() =>
                                             handleBookTicket(
                                               item._id,

@@ -42,3 +42,51 @@ export const MovieLink = styled.button`
     font-size: 1.4rem;
   }
 ` as any;
+export const MovieSeeMore = styled.div`
+  display: flex;
+  gap: 0 10px;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #f26b38;
+  border: 1px solid #f26b38;
+  padding: 15px 20px;
+  margin-top: 20px;
+  width: max-content;
+  margin: 40px 0 0 auto;
+
+  &:hover {
+    color: #fff;
+    background-color: #f26b38;
+    transition: all 0.5s ease;
+
+    svg {
+      fill: #fff;
+      transition: all 0.5s ease;
+    }
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+    fill: #f26b38;
+  }
+`;
+export const MovieListList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem 3rem;
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 1024px) {
+    padding: 0 3.2rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    padding: 0 1.6rem;
+  }
+`;

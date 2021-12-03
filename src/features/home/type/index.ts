@@ -50,8 +50,9 @@ export interface MovieItemType {
   age: number;
   categories: categoryType[];
   screens: screenType[];
+  dateStart: string;
+  dateEnd: string;
 }
-
 export interface MovieRespon {
   success: boolean;
   message: string;
@@ -61,7 +62,22 @@ export interface MovieRespon {
     movie: MovieItemType;
   };
 }
-
+export interface MoviesRespons {
+  success: boolean;
+  message: string;
+  values: {
+    movies: MovieItemType[];
+  };
+}
+export interface MoviesRespon {
+  success: boolean;
+  message: string;
+  values: {
+    moviePlay: MovieItemType[];
+    movieComing: MovieItemType[];
+    movieEx: MovieItemType[];
+  };
+}
 export interface CinemaType {
   _id: string;
   name: string;
@@ -76,9 +92,25 @@ export interface CinemaType {
   };
 }
 
+export interface CinemaRespon {
+  success: boolean;
+  message: string;
+  values: {
+    cinemas: CinemaType[];
+  };
+}
+
 export interface dateType {
   date: string;
   day: string;
+}
+
+export interface DateRespon {
+  success: boolean;
+  message: string;
+  values: {
+    dates: string[];
+  };
 }
 
 export interface roomType {
@@ -87,7 +119,12 @@ export interface roomType {
   cinema: CinemaType;
   rowNumber: number;
   seatsInRow: number;
-  screen: string;
+  screen: {
+    _id: string;
+    name: string;
+    weekdayPrice: number;
+    weekendPrice: number;
+  };
 }
 
 export interface timeType {
@@ -128,5 +165,23 @@ export interface LocationRespon {
   message: string;
   values: {
     locations: string[];
+  };
+}
+
+export interface showTimesType {
+  _id: string;
+  date: string;
+  showTime: string;
+  totalPrice: number;
+  ticket: string;
+  food: string;
+  room: roomType;
+  timeSlot: timeType;
+}
+export interface showTimesRespon {
+  success: boolean;
+  message: string;
+  values: {
+    showTimeDetails: showTimesType[];
   };
 }

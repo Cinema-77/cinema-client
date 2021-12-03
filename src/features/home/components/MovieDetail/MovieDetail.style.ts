@@ -246,7 +246,7 @@ export const MovieShowTimesItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0 24px;
-  padding: 12px 20px;
+  padding: 20px;
   border-bottom: 1px solid rgb(227, 235, 246);
   /* background-color: ${({ active }: any) => (active ? '#c7d6ec' : '#edf2f9')}; */
   background-color: #c7d6ec;
@@ -282,6 +282,10 @@ export const MovieShowTimeTime = styled.div`
   background-color: #fff;
   padding: 12px 20px;
   gap: 12px 0;
+  border: 1px solid #ccc;
+  border-top-color: transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 `;
 export const MovieShowTimeAddress = styled.span`
   color: #95aac9;
@@ -314,7 +318,8 @@ export const MovieShowTimeTimeScreen = styled.div`
 ` as any;
 export const MovieShowTimeDiv = styled.div`
   display: flex;
-  gap: 0 8px;
+  flex-wrap: wrap;
+  gap: 8px 8px;
 
   @media (max-width: 414px) {
     flex-wrap: wrap;

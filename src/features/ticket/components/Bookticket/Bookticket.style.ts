@@ -368,7 +368,6 @@ export const BookticketLeftContent3List = styled.div`
 export const BookticketLeftContent3Item = styled.div`
   display: flex;
   align-items: center;
-  gap: 0 30px;
 
   span {
     font-size: 14px;
@@ -457,7 +456,7 @@ export const BookticketLeftContent3Item = styled.div`
 `;
 
 export const Loading = styled.span`
-  position: absolute;
+  position: fixed;
   display: flex;
   background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;

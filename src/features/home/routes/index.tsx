@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Event, Slider, MovieList } from '@/features/home';
-interface HomeProps {}
+import { useDispatch } from 'react-redux';
+import { getMovieList } from '../MovieSlice';
 
-export const Home: React.FC<HomeProps> = () => {
+export const Home = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMovieList());
+  }, [dispatch]);
   return (
     <main>
       <Slider />

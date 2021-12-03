@@ -14,6 +14,7 @@ import {
   ticketProps,
 } from '../../type';
 import { addTicket, getListTicket } from '../..';
+import { CheckAge } from '@/utils/CheckAge';
 export const Bookticket = () => {
   const [ticket, setTicket] = useState<ticketProps[]>([]);
   const [totalMoney, setTotalMoney] = useState<number>(0);
@@ -26,15 +27,12 @@ export const Bookticket = () => {
   const location = useLocation();
   const [day, setDay] = useState<string>('');
   const query = useMemo(() => qs.parse(location.search), [location.search]);
-  const [user, setUser] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [pay, setPay] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const history = useHistory();
   useEffect(() => {
     if (showTimes?.date) {
-      const time = showTimes.date.split('/').reverse().join('-');
-      const date = new Date(time).getDay();
+      const date = new Date(showTimes.date).getDay();
       if (date === 0) {
         setDay('CN');
       } else {
@@ -43,14 +41,18 @@ export const Bookticket = () => {
     }
   }, [showTimes?.date]);
   useEffect(() => {
-    getListTicket(query.id)
-      .then((res) => {
-        setCombos(res.values.combos);
-        setShowTimes(res.values.showTimeDetail);
-        setTicketList(res.values.tickets);
-      })
-      .catch((err) => console.log(err));
-  }, [query.id]);
+    if (query.id) {
+      getListTicket(query.id)
+        .then((res) => {
+          setCombos(res.values.combos);
+          setShowTimes(res.values.showTimeDetail);
+          setTicketList(res.values.tickets);
+        })
+        .catch(() => history.push('/'));
+    } else {
+      history.push('/');
+    }
+  }, [query.id, history]);
   useEffect(() => {
     setTotalMoney(
       Number(
@@ -74,18 +76,16 @@ export const Bookticket = () => {
     return () => clearInterval(timer);
   }, [countDown, page]);
   const handleCheck = (seat: seatType) => {
-    if (seat.status === 0) {
-      if ((ticket.filter((x) => x.idSeat === seat.idSeat)[0]?.idSeat || '') === seat.idSeat) {
-        setTicket(ticket.filter((ticketValue) => ticketValue.idSeat !== seat.idSeat));
+    if ((ticket.filter((x) => x.idSeat === seat.idSeat)[0]?.idSeat || '') === seat.idSeat) {
+      setTicket(ticket.filter((ticketValue) => ticketValue.idSeat !== seat.idSeat));
+    } else {
+      if (ticket.length === 8) {
+        toast.error('Chọn tối đa 8 vé', {
+          position: 'top-center',
+          autoClose: 3000,
+        });
       } else {
-        if (ticket.length === 8) {
-          toast.error('Chọn tối đa 8 vé', {
-            position: 'top-center',
-            autoClose: 3000,
-          });
-        } else {
-          setTicket([...ticket, seat]);
-        }
+        setTicket([...ticket, seat]);
       }
     }
   };
@@ -137,48 +137,30 @@ export const Bookticket = () => {
   };
   const handleSubmit = async () => {
     setIsLoading(true);
-    if (user === '' || password === '' || pay === 0) {
-      if (user === '' || password === '') {
-        toast.error('Vui lòng nhập đầy đủ thông tin', {
-          position: 'top-center',
-          autoClose: 3000,
-        });
-      }
-      if (pay === 0) {
-        toast.error('Vui lòng chọn phương thức thanh toán', {
-          position: 'top-center',
-          autoClose: 3000,
-        });
-      }
+    if (pay === 0) {
+      toast.error('Vui lòng chọn phương thức thanh toán', {
+        position: 'top-center',
+        autoClose: 3000,
+      });
+      setIsLoading(false);
       return;
     }
     const body = {
       data: [...ticket],
       showTimeDetailId: query.id,
       payment: {
-        username: user,
-        password: password,
         type: pay,
       },
       combos: [...countCombo],
+      gifts: [],
+      coupons: [],
     };
     const res = await addTicket(body);
     if (res) {
-      if (!res.success) {
-        toast.error(res.message, {
-          position: 'top-center',
-          autoClose: 3000,
-        });
-      } else {
-        toast.success(res.message + ', vui lòng kiểm tra gmail để xem thông tin đặt vé !', {
-          position: 'top-center',
-          autoClose: 3000,
-        });
-        history.push('/');
-      }
+      window.location.href = res.uri;
     }
+    setIsLoading(false);
   };
-
   return (
     <div className="container">
       <S.Bookticket>
@@ -207,7 +189,7 @@ export const Bookticket = () => {
                     {tickets.nameSeats.map((seat) => (
                       <S.BookticketLeftContentScreenItemSpan
                         key={seat.idSeat}
-                        onClick={() => handleCheck(seat)}
+                        onClick={() => seat.status !== 1 && handleCheck(seat)}
                         active={ticket.filter((x) => x.idSeat === seat.idSeat).toString()}
                         sold={seat.status === 1}
                       >
@@ -301,24 +283,6 @@ export const Bookticket = () => {
                   </select>
                 </S.BookticketLeftContent3Item>
                 <S.BookticketLeftContent3Item>
-                  <span>Tài khoản</span>
-                  <input
-                    type="text"
-                    placeholder="Nhập tài khoản"
-                    value={user}
-                    onChange={(e) => setUser(e.target.value)}
-                  />
-                </S.BookticketLeftContent3Item>
-                <S.BookticketLeftContent3Item>
-                  <span>Password</span>
-                  <input
-                    type="password"
-                    placeholder="Nhập mật khẩu"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </S.BookticketLeftContent3Item>
-                <S.BookticketLeftContent3Item>
                   <span></span>
                   <span>
                     (*) Bằng việc click/chạm vào THANH TOÁN, bạn đã xác nhận hiểu rõ các Quy Định
@@ -340,32 +304,7 @@ export const Bookticket = () => {
           <S.BookticketRight>
             <img src={showTimes.showTime.movie.image} alt={showTimes.showTime.movie.name} />
             <S.BookticketRightTitle>{showTimes.showTime.movie.name}</S.BookticketRightTitle>
-            <S.BookticketRightAge>
-              {showTimes.showTime.movie.age < 13 && (
-                <>
-                  <span>P</span>
-                  <span>(*) Phim dành cho mọi đối tượng</span>
-                </>
-              )}
-              {showTimes.showTime.movie.age >= 13 && showTimes.showTime.movie.age < 16 && (
-                <>
-                  <span>C13</span>
-                  <span>(*) Phim chỉ dành cho khán giả từ 13 tuổi trở lên</span>
-                </>
-              )}
-              {showTimes.showTime.movie.age >= 16 && showTimes.showTime.movie.age < 18 && (
-                <>
-                  <span>C16</span>
-                  <span>(*) Phim chỉ dành cho khán giả từ 16 tuổi trở lên</span>
-                </>
-              )}
-              {showTimes.showTime.movie.age > 18 && (
-                <>
-                  <span>C18</span>
-                  <span>(*) Phim chỉ dành cho khán giả từ 18 tuổi trở lên</span>
-                </>
-              )}
-            </S.BookticketRightAge>
+            <CheckAge age={showTimes.showTime.movie.age} />
             <S.BookticketRightItem>
               <span>Rạp:</span>
               <span>
