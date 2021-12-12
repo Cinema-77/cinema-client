@@ -143,6 +143,7 @@ export const BookticketRight = styled.div`
 
   img {
     padding: 0 30px;
+    margin: auto;
   }
 
   @media (max-width: 1024px) {
@@ -243,7 +244,7 @@ export const BookticketRightItemTotal = styled.div`
 export const BookticketBtn = styled.div`
   cursor: pointer;
   width: max-content;
-  padding: 10px 20px;
+  padding: 10px !important;
   font-size: 14px;
   color: #fff;
   background-color: #f26b38;

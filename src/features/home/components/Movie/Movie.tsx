@@ -1,14 +1,18 @@
 import { Loading } from '@/features/Loading/Loading';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 import { MovieItem, MovieItemType } from '../..';
 import { getMovieList } from '../../MovieSlice';
 import * as S from './Movie.style';
+import qs from 'query-string';
 
 export const Movie = () => {
   const [nowShowing, setNowShowing] = useState<MovieItemType[]>([]);
   const [comingSoon, setComingSoon] = useState<MovieItemType[]>([]);
   const [isMovie, setIsMovie] = useState<boolean>(false);
+  const location = useLocation();
+  const query = useMemo(() => qs.parse(location.search), [location.search]);
   const dispatch = useDispatch();
   const update = useSelector(
     (state: {
@@ -21,6 +25,10 @@ export const Movie = () => {
       };
     }) => state.movie.list
   );
+
+  useEffect(() => {
+    if (query.tab === '1') setIsMovie(true);
+  }, [query]);
 
   useEffect(() => {
     dispatch(getMovieList());

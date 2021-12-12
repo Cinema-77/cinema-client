@@ -24,6 +24,8 @@ import {
 import { useSelector } from 'react-redux';
 import { SelectItem } from './SelectItem';
 import { Loading2 } from '@/features/Loading2/Loading2';
+import { useAuth } from '@/lib/auth';
+import { useHistory } from 'react-router-dom';
 
 export const Slider = () => {
   const [image] = useState([Banner1, Banner2, Banner3]);
@@ -38,6 +40,8 @@ export const Slider = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tab, setTab] = useState<number>(0);
   const [dateList, setDateList] = useState<dateType[] | any[]>([]);
+  const { user } = useAuth();
+  const history = useHistory();
   const update = useSelector(
     (state: {
       movie: {
@@ -56,7 +60,6 @@ export const Slider = () => {
     }
     setCurrentIndex(currentIndex - 1);
   };
-
   const chooseNext = () => {
     if (currentIndex >= SLImage) {
       return setCurrentIndex(0);
@@ -117,7 +120,6 @@ export const Slider = () => {
 
     return () => clearInterval(autoSlider);
   }, [SLImage, currentIndex]);
-
   useEffect(() => {
     setIsLoading(true);
     if (tab === 0) {
@@ -154,7 +156,7 @@ export const Slider = () => {
   useEffect(() => {
     setIsLoading(true);
     if (tab === 2) {
-      setMovieList([]);
+      // setMovieList([]);
       setDateList([]);
       setTimeList([]);
       getMovieByCinema(cinemaValue)
@@ -218,6 +220,16 @@ export const Slider = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateValue, tab]);
 
+  const handleBuyTicket = () => {
+    if (timeValue) {
+      if (user) {
+        history.push(`/book-ticket/?id=${timeValue}`);
+      } else {
+        history.push('/auth');
+      }
+    }
+  };
+
   return (
     <S.Slider>
       <img src={image[currentIndex]} alt="" />
@@ -255,9 +267,7 @@ export const Slider = () => {
             />
             {isLoading && <Loading2 />}
           </S.FormSliderListSelect>
-          <S.FormSliderBtn to={timeValue && '/book-ticket/?id=' + timeValue}>
-            Mua Vé
-          </S.FormSliderBtn>
+          <S.FormSliderBtn onClick={() => handleBuyTicket()}>Mua Vé</S.FormSliderBtn>
         </S.FormSliderContent>
       </S.FormSlider>
     </S.Slider>

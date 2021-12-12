@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Slider = styled.section`
@@ -149,7 +148,7 @@ export const FormSliderTab = styled.h2`
     padding: 0 14px;
   }
 ` as any;
-export const FormSliderBtn = styled(Link)`
+export const FormSliderBtn = styled.div`
   cursor: pointer;
   font-size: 14px;
   letter-spacing: 1px;
