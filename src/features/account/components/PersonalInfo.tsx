@@ -7,11 +7,20 @@ import { Address } from '@/features/auth/components/RegisterForm';
 import { getDistrict, getWards, useCities } from '@/features/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { UpdateInfouser } from '..';
+import { Toast } from '@/lib/Toast';
 
 const schema = z.object({
-  fullName: z.string().min(1, 'Vui lòng không để trống tên'),
+  fullName: z.string().nonempty('Vui lòng không để trống tên'),
   phoneNumber: z.string().min(10, 'Vui lòng điền số điện thoại'),
-  password: z.string(),
+  date: z.string(),
+  month: z.string(),
+  year: z.string(),
+  city: z.string().nonempty('Vui lòng chọn thành phố'),
+  district: z.string().nonempty('Vui lòng chọn quận/huyện'),
+  ward: z.string().nonempty('Vui lòng chọn xã'),
+  street: z.string().nonempty('Vui lòng nhập tên đường'),
+  email: z.string(),
 });
 
 interface PersonalInfoProps {}
@@ -27,8 +36,6 @@ type InfoValues = {
   district: string;
   ward: string;
   street: string;
-  password: string;
-  confirmPassword: string;
 };
 
 export const PersonalInfo: React.FC<PersonalInfoProps> = () => {
@@ -63,9 +70,25 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = () => {
     }
     // eslint-disable-next-line
   }, [districtCode]);
-
   const onSave: SubmitHandler<InfoValues> = async (data: InfoValues) => {
-    console.log('ok');
+    const body = {
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      fullName: data.fullName,
+      address: {
+        city: data.city,
+        district: data.district,
+        ward: data.ward,
+        street: data.street,
+      },
+      dateOfBirth: data.date + '/' + data.month + '/' + data.year,
+    };
+    const res = await UpdateInfouser(user?._id, body);
+    if (res.success) {
+      Toast(res.message, true);
+    } else {
+      Toast(res.message);
+    }
     setIsSaving(!isSaving);
   };
   return (
@@ -93,29 +116,12 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = () => {
             label="Email Address"
             error={formState.errors['email']}
             registration={register('email', {
-              disabled: true,
               value: user?.email,
             })}
+            disabled
             className="bg-gray-100"
           />
         </div>
-        <div className="flex-100 max-w-full px-4 md:flex-50 md:max-w-[50%]">
-          <InputField
-            type="password"
-            label="Current Password *"
-            error={formState.errors['password']}
-            registration={register('password')}
-          />
-        </div>
-        <div className="flex-100 max-w-full px-4 md:flex-50 md:max-w-[50%]">
-          <InputField
-            type="password"
-            label="New Password *"
-            error={formState.errors['confirmPassword']}
-            registration={register('confirmPassword')}
-          />
-        </div>
-
         <div className="flex-100 px-4 max-w-full ">
           <label className="text-2xl font-medium mb-2 inline-block">Date of Birth</label>
           <div className="flex flex-wrap ml-[-10px]">

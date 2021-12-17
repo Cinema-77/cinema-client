@@ -25,6 +25,4 @@ const movie = createSlice({
 
 const movieReducer = movie.reducer;
 
-// export const {} = account.actions;
-
 export default movieReducer;

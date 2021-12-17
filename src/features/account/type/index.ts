@@ -1,3 +1,5 @@
+import { InfoValues } from '..';
+
 export interface cinemaType {
   _id: string;
   name: string;
@@ -174,5 +176,13 @@ export interface GetCouponUserRespon {
     hasMore: boolean;
     page: string;
     pageSize: 1;
+  };
+}
+
+export interface PasswordRespon {
+  success: boolean;
+  message: string;
+  values: {
+    errors: InfoValues;
   };
 }

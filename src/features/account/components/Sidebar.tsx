@@ -18,6 +18,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
     { title: 'Lịch sử giao dịch', url: '/ticket' },
     { title: 'Coupon', url: '/coupon' },
     { title: ' Thông tin cá nhân', url: '' },
+    { title: 'Đổi mật khẩu', url: '/changepassword' },
     { title: 'Phương thức thanh toán', url: '/payment' },
     { title: 'Đăng xuất', url: '/logout', onClick: () => logout() },
   ].filter(Boolean);

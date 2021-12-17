@@ -13,6 +13,7 @@ const { Ticket } = lazyImport(() => import('@/features/account'), 'Ticket');
 const { Coupon } = lazyImport(() => import('@/features/account'), 'Coupon');
 const { Bookticket } = lazyImport(() => import('@/features/ticket'), 'Bookticket');
 const { Movie } = lazyImport(() => import('@/features/home'), 'Movie');
+const { ChangePassword } = lazyImport(() => import('@/features/account'), 'ChangePassword');
 
 const routes: any[] = [
   {
@@ -62,6 +63,10 @@ const routes: any[] = [
           {
             path: '/account/coupon',
             component: Coupon,
+          },
+          {
+            path: '/account/changepassword',
+            component: ChangePassword,
           },
         ],
       },

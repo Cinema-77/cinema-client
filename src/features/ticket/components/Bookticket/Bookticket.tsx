@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
 import * as S from './Bookticket.style';
 import iconPlus from '@/assets/img/plus.png';
 import iconMinus from '@/assets/img/minus.png';
@@ -15,6 +14,7 @@ import {
 } from '../../type';
 import { addTicket, getListTicket } from '../..';
 import { CheckAge } from '@/utils/CheckAge';
+import { Toast } from '@/lib/Toast';
 export const Bookticket = () => {
   const [ticket, setTicket] = useState<ticketProps[]>([]);
   const [totalMoney, setTotalMoney] = useState<number>(0);
@@ -80,10 +80,7 @@ export const Bookticket = () => {
       setTicket(ticket.filter((ticketValue) => ticketValue.idSeat !== seat.idSeat));
     } else {
       if (ticket.length === 8) {
-        toast.error('Chọn tối đa 8 vé', {
-          position: 'top-center',
-          autoClose: 3000,
-        });
+        Toast('Chọn tối đa 8 vé');
       } else {
         setTicket([...ticket, seat]);
       }
@@ -92,10 +89,7 @@ export const Bookticket = () => {
   const handleNextPage = () => {
     const minutes15 = 900;
     if (ticket.length === 0) {
-      toast.error('Vui lòng chọn vé', {
-        position: 'top-center',
-        autoClose: 3000,
-      });
+      Toast('Vui lòng chọn vé');
     } else if (page === 1) {
       setCountDown(minutes15);
       setPage(page + 1);
@@ -138,10 +132,7 @@ export const Bookticket = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     if (pay === 0) {
-      toast.error('Vui lòng chọn phương thức thanh toán', {
-        position: 'top-center',
-        autoClose: 3000,
-      });
+      Toast('Vui lòng chọn phương thức thanh toán');
       setIsLoading(false);
       return;
     }

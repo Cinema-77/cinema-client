@@ -4,8 +4,8 @@ import closeIMG from '@/assets/img/close.png';
 import { couponType, detailProps, userType } from '../../type';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChangeCoupon } from '../..';
-import { toast } from 'react-toastify';
 import { getUserInfo } from '../../accountSlice';
+import { Toast } from '@/lib/Toast';
 
 interface CouponListProps {
   setIsCoupon: Dispatch<SetStateAction<boolean>>;
@@ -23,7 +23,6 @@ export const CouponList: React.FC<CouponListProps> = ({ setIsCoupon }) => {
       setInfoUser(update.user);
     }
   }, [update]);
-  console.log(listCoupon);
   const handleChangeCoupon = async (idCoupon: string) => {
     const body = {
       giftId: idCoupon,
@@ -32,17 +31,11 @@ export const CouponList: React.FC<CouponListProps> = ({ setIsCoupon }) => {
     const res = await ChangeCoupon(body);
     if (res) {
       if (res.success) {
-        toast.success(res.message, {
-          position: 'top-center',
-          autoClose: 3000,
-        });
+        Toast(res.message, true);
         dispatch(getUserInfo());
         setIsCoupon(false);
       } else {
-        toast.error(res.message, {
-          position: 'top-center',
-          autoClose: 3000,
-        });
+        Toast(res.message);
       }
     }
   };
