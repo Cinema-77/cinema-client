@@ -9,6 +9,11 @@ const { NotFound } = lazyImport(() => import('@/components/Elements'), 'NotFound
 const { MovieDetail } = lazyImport(() => import('@/features/home'), 'MovieDetail');
 const { Account } = lazyImport(() => import('@/features/account'), 'Account');
 const { PersonalInfo } = lazyImport(() => import('@/features/account'), 'PersonalInfo');
+const { Ticket } = lazyImport(() => import('@/features/account'), 'Ticket');
+const { Coupon } = lazyImport(() => import('@/features/account'), 'Coupon');
+const { Bookticket } = lazyImport(() => import('@/features/ticket'), 'Bookticket');
+const { Movie } = lazyImport(() => import('@/features/home'), 'Movie');
+const { ChangePassword } = lazyImport(() => import('@/features/account'), 'ChangePassword');
 
 const routes: any[] = [
   {
@@ -26,9 +31,19 @@ const routes: any[] = [
         title: 'Đăng nhập',
       },
       {
+        path: path.movie,
+        component: Movie,
+        title: 'Danh sách Phim',
+      },
+      {
         path: path.detail,
         component: MovieDetail,
         title: 'Name Movie',
+      },
+      {
+        path: path.bookTicket,
+        component: Bookticket,
+        title: 'Book Ticket',
       },
       {
         path: path.account,
@@ -38,7 +53,20 @@ const routes: any[] = [
         routes: [
           {
             path: '/account',
+            exact: true,
             component: PersonalInfo,
+          },
+          {
+            path: '/account/ticket',
+            component: Ticket,
+          },
+          {
+            path: '/account/coupon',
+            component: Coupon,
+          },
+          {
+            path: '/account/changepassword',
+            component: ChangePassword,
           },
         ],
       },

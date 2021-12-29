@@ -1,26 +1,21 @@
 import { path } from '@/constants';
 import React from 'react';
+import { MovieItemType } from '../../type';
 import * as S from './MovieItem.style';
-
 interface MovieItemProps {
-  image: any;
+  item: MovieItemType;
+  height?: boolean;
 }
-
-export const MovieItem: React.FC<MovieItemProps> = ({ image }) => {
+export const MovieItem: React.FC<MovieItemProps> = ({ item, height }) => {
   return (
-    <S.MovieList>
-      {image.slice(0, 6).map((img: any, index: number) => (
-        <S.MovieItem key={index}>
-          <S.MovieItemIMG>
-            <img src={img.film} alt="" />
-            <S.MovieItemOverLay>
-              <S.MovieItemLink to={path.detail}>Chi tiết</S.MovieItemLink>
-            </S.MovieItemOverLay>
-          </S.MovieItemIMG>
-          <S.MovieItemNameEng>{img.titleEN}</S.MovieItemNameEng>
-          <S.MovieItemNameVNI>{img.titleVN}</S.MovieItemNameVNI>
-        </S.MovieItem>
-      ))}
-    </S.MovieList>
+    <S.MovieItem key={item._id}>
+      <S.MovieItemIMG>
+        <img src={item.image} alt="" style={height ? { height: '253px' } : { height: '453px' }} />
+        <S.MovieItemOverLay>
+          <S.MovieItemLink to={path.detail + `/?id=${item._id}`}>Chi tiết</S.MovieItemLink>
+        </S.MovieItemOverLay>
+      </S.MovieItemIMG>
+      <S.MovieItemNameEng>{item.name}</S.MovieItemNameEng>
+    </S.MovieItem>
   );
 };

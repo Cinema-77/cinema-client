@@ -21,7 +21,7 @@ export const Account: React.FC<AccountProps> = ({ routes }) => {
           <div className="flex-100 max-w-full w-full relative px-4 md:flex-25 md:max-w-[25%]">
             <Sidebar />
           </div>
-          <div className="flex-100 max-w-full w-full relative px-4 md:flex-75 md:max-w-[75%] lg:flex-67 lg:max-w-[66.66667%] lg:ml-[8.33333%]">
+          <div className="flex-100 max-w-full w-full px-4 md:flex-75 md:max-w-[75%] lg:flex-67 lg:max-w-[66.66667%] lg:ml-[8.33333%]">
             <Switch>
               {routes.map((route: any, i: number) => (
                 <RouteWithSubRoutes key={i} {...route} />

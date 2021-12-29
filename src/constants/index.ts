@@ -3,5 +3,7 @@ export const path = {
   auth: '/auth',
   detail: '/detail',
   account: '/account',
+  bookTicket: '/book-ticket',
+  movie: '/movie',
   notFound: '*',
 };

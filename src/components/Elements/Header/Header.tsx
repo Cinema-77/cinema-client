@@ -11,6 +11,7 @@ import IconPERSON from '@/assets/icon/iconperson.svg';
 import IconMenu from '@/assets/icon/menu.svg';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
+import { useHistory } from 'react-router-dom';
 
 interface HeaderProps {}
 
@@ -19,6 +20,7 @@ export const Header: React.FC<HeaderProps> = () => {
   const [Menu1, setMenu1] = useState(false);
   const [changeLanguage, setChangeLanguage] = useState('English');
   const { user } = useAuth();
+  const history = useHistory();
 
   return (
     <S.Header>
@@ -148,8 +150,12 @@ export const Header: React.FC<HeaderProps> = () => {
               <S.HeaderItem>
                 Phim
                 <S.HeaderSubList>
-                  <S.HeaderSubItem>Phim Đang Chiếu</S.HeaderSubItem>
-                  <S.HeaderSubItem>Phim Sắp Chiếu</S.HeaderSubItem>
+                  <S.HeaderSubItem onClick={() => history.push('/movie')}>
+                    Phim Đang Chiếu
+                  </S.HeaderSubItem>
+                  <S.HeaderSubItem onClick={() => history.push('/movie?tab=1')}>
+                    Phim Sắp Chiếu
+                  </S.HeaderSubItem>
                 </S.HeaderSubList>
               </S.HeaderItem>
               <S.HeaderItem>
@@ -170,7 +176,9 @@ export const Header: React.FC<HeaderProps> = () => {
               <S.HeaderItem>
                 Thành Viên
                 <S.HeaderSubList>
-                  <S.HeaderSubItem>Tài Khoản</S.HeaderSubItem>
+                  <S.HeaderSubItem onClick={() => history.push('/account')}>
+                    Tài Khoản
+                  </S.HeaderSubItem>
                   <S.HeaderSubItem>Quyền Lợi</S.HeaderSubItem>
                 </S.HeaderSubList>
               </S.HeaderItem>
@@ -179,7 +187,9 @@ export const Header: React.FC<HeaderProps> = () => {
                 <S.HeaderSubList>
                   <S.HeaderSubItem>Quầy Online</S.HeaderSubItem>
                   <S.HeaderSubItem>Sự kiện & Vé Nhóm</S.HeaderSubItem>
-                  <S.HeaderSubItem>Thẻ Quà Tặng</S.HeaderSubItem>
+                  <S.HeaderSubItem onClick={() => history.push('/account/coupon')}>
+                    Thẻ Quà Tặng
+                  </S.HeaderSubItem>
                 </S.HeaderSubList>
               </S.HeaderItem>
             </S.HeaderList>
