@@ -94,43 +94,56 @@ export const MovieDetail = () => {
     setDate(_value);
   };
   const handleBookTicket = (id: string, time: string) => {
-    const timeHourNow = timeNow.split('-');
-    const timeDateNow = timeHourNow[1].split('/');
-    const timesHour = time.split('-');
-    const timesDate = timesHour[1].split('/');
-    if (timeDateNow[1] < timesDate[1]) {
-      if (user) {
-        history.push(`/book-ticket/?id=${id}`);
-      } else {
-        history.push('/auth');
-      }
-    } else if (timeDateNow[1] === timesDate[1]) {
-      if (timeHourNow[0] < timesHour[0]) {
-        if (user) {
-          history.push(`/book-ticket/?id=${id}`);
-        } else {
-          history.push('/auth');
-        }
-      } else {
-        return;
-      }
+    // const timeHourNow = timeNow.split('-');
+    // const timeDateNow = timeHourNow[1].split('/');
+    // const timesHour = time.split('-');
+    // const timesDate = timesHour[1].split('/');
+    if (user) {
+      history.push(`/book-ticket/?id=${id}`);
+    } else {
+      history.push('/auth');
     }
+    // if (timeDateNow[1] < timesDate[1]) {
+    // } else if (timeDateNow[1] === timesDate[1]) {
+    //   if (timeHourNow[0] < timesHour[0]) {
+    //     if (user) {
+    //       history.push(`/book-ticket/?id=${id}`);
+    //     } else {
+    //       history.push('/auth');
+    //     }
+    //   } else {
+    //     return;
+    //   }
+    // }
   };
   const handleDisabledShowTime = (time: string) => {
     const timeHourNow = timeNow.split('-');
     const timeDateNow = timeHourNow[1].split('/');
+    const minutesNow = timeHourNow[0].split(':');
     const timesHour = time.split('-');
     const timesDate = timesHour[1].split('/');
+    const timesMinute = timesHour[0].split(':');
+    console.log({ minutesNow });
+    console.log({ timesMinute });
     let checkTime: boolean = false;
     if (timeDateNow[1] < timesDate[1]) {
       checkTime = false;
     } else if (timeDateNow[1] === timesDate[1]) {
-      if (timeHourNow[0] < timesHour[0]) {
+      if (minutesNow[0] > timesMinute[0]) {
         checkTime = false;
+      } else if (minutesNow[0] === timesMinute[0]) {
+        if (minutesNow[1] < timesMinute[1]) {
+          checkTime = false;
+        } else {
+          checkTime = true;
+        }
       } else {
         checkTime = true;
       }
+    } else {
+      checkTime = false;
     }
+    console.log({ checkTime });
     return checkTime;
   };
   const handleIsDetailMovieTrailer = (isDetail: boolean, isMovie: boolean, isTrailer: boolean) => {
@@ -304,9 +317,9 @@ export const MovieDetail = () => {
                                       {showTime.screen2D.showTimesDetails.map((item) => (
                                         <S.MovieShowTimeTimeScreen
                                           key={item._id}
-                                          disabled={handleDisabledShowTime(
-                                            item.timeSlot.time + '-' + date
-                                          )}
+                                          // disabled={handleDisabledShowTime(
+                                          //   item.timeSlot.time + '-' + date
+                                          // )}
                                           onClick={() =>
                                             handleBookTicket(
                                               item._id,
@@ -329,9 +342,9 @@ export const MovieDetail = () => {
                                       {showTime.screen3D.showTimesDetails.map((item) => (
                                         <S.MovieShowTimeTimeScreen
                                           key={item._id}
-                                          disabled={handleDisabledShowTime(
-                                            item.timeSlot.time + '-' + date
-                                          )}
+                                          // disabled={handleDisabledShowTime(
+                                          //   item.timeSlot.time + '-' + date
+                                          // )}
                                           onClick={() =>
                                             handleBookTicket(
                                               item._id,
@@ -354,9 +367,9 @@ export const MovieDetail = () => {
                                       {showTime.screenIMAX.showTimesDetails.map((item) => (
                                         <S.MovieShowTimeTimeScreen
                                           key={item._id}
-                                          disabled={handleDisabledShowTime(
-                                            item.timeSlot.time + '-' + date
-                                          )}
+                                          // disabled={handleDisabledShowTime(
+                                          //   item.timeSlot.time + '-' + date
+                                          // )}
                                           onClick={() =>
                                             handleBookTicket(
                                               item._id,
