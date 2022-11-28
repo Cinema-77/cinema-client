@@ -232,7 +232,7 @@ export const Slider = () => {
 
   return (
     <S.Slider>
-      <img src={image[currentIndex]} alt="" />
+      <img src={image[currentIndex]} alt="" style={{ width: '100%' }} />
       <S.SliderBtnPrev onClick={choosePrev}>
         <img src={IconPrev} alt="" />
       </S.SliderBtnPrev>
